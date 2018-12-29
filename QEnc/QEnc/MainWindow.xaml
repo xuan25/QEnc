@@ -1,0 +1,391 @@
+﻿<Window x:Class="QEnc.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QEnc"
+        xmlns:props="clr-namespace:QEnc.Properties"
+        mc:Ignorable="d"
+        Title="QEnc" Height="450" Width="800" WindowStyle="None" ResizeMode="CanResizeWithGrip" Background="Transparent" AllowsTransparency="True" BorderThickness="16" Loaded="Window_Loaded" Closing="Window_Closing">
+    <Window.Resources>
+        <!--Animations-->
+        <Storyboard x:Key="MinimizeBtnMouseEnter">
+            <ColorAnimation Storyboard.TargetName="MinimizeBtnBackground" 
+                            Storyboard.TargetProperty="(Fill).(SolidColorBrush.Color)"
+                            BeginTime="00:00:00.000" To="#7e8ba0"
+                            Duration="00:00:00.200"/>
+            <ColorAnimation Storyboard.TargetName="MinimizeBtnIcon" 
+                            Storyboard.TargetProperty="(Fill).(SolidColorBrush.Color)"
+                            BeginTime="00:00:00.000" To="#ffffff"
+                            Duration="00:00:00.200"/>
+        </Storyboard>
+        <Storyboard x:Key="MinimizeBtnMouseLeave">
+            <ColorAnimation Storyboard.TargetName="MinimizeBtnBackground" 
+                            Storyboard.TargetProperty="(Fill).(SolidColorBrush.Color)"
+                            BeginTime="00:00:00.000" To="#404a58"
+                            Duration="00:00:00.200"/>
+            <ColorAnimation Storyboard.TargetName="MinimizeBtnIcon" 
+                            Storyboard.TargetProperty="(Fill).(SolidColorBrush.Color)"
+                            BeginTime="00:00:00.000" To="#999999"
+                            Duration="00:00:00.200"/>
+        </Storyboard>
+        <Storyboard x:Key="CloseBtnMouseEnter">
+            <ColorAnimation Storyboard.TargetName="CloseBtnBackground" 
+                            Storyboard.TargetProperty="(Fill).(SolidColorBrush.Color)"
+                            BeginTime="00:00:00.000" To="#f3595b"
+                            Duration="00:00:00.200"/>
+            <ColorAnimation Storyboard.TargetName="CloseBtnIcon" 
+                            Storyboard.TargetProperty="(Fill).(SolidColorBrush.Color)"
+                            BeginTime="00:00:00.000" To="#ffffff"
+                            Duration="00:00:00.200"/>
+        </Storyboard>
+        <Storyboard x:Key="CloseBtnMouseLeave">
+            <ColorAnimation Storyboard.TargetName="CloseBtnBackground" 
+                            Storyboard.TargetProperty="(Fill).(SolidColorBrush.Color)"
+                            BeginTime="00:00:00.000" To="#404a58"
+                            Duration="00:00:00.200"/>
+            <ColorAnimation Storyboard.TargetName="CloseBtnIcon" 
+                            Storyboard.TargetProperty="(Fill).(SolidColorBrush.Color)"
+                            BeginTime="00:00:00.000" To="#999999"
+                            Duration="00:00:00.200"/>
+        </Storyboard>
+        <Storyboard x:Key="ProcessGridDragEnter">
+            <ColorAnimation Storyboard.TargetName="ProcessGridBackground" 
+                            Storyboard.TargetProperty="(Brush).(SolidColorBrush.Color)"
+                            BeginTime="00:00:00.000" To="#FFE2F8FF"
+                            Duration="00:00:00.200"/>
+        </Storyboard>
+        <Storyboard x:Key="ProcessGridDragLeave">
+            <ColorAnimation Storyboard.TargetName="ProcessGridBackground" 
+                            Storyboard.TargetProperty="(Brush).(SolidColorBrush.Color)"
+                            BeginTime="00:00:00.000" To="#00E2F8FF"
+                            Duration="00:00:00.200"/>
+        </Storyboard>
+        <Storyboard x:Key="VideoGridDragEnter">
+            <ColorAnimation Storyboard.TargetName="VideoGridBackground" 
+                            Storyboard.TargetProperty="(Brush).(SolidColorBrush.Color)"
+                            BeginTime="00:00:00.000" To="#FFE2F8FF"
+                            Duration="00:00:00.200"/>
+        </Storyboard>
+        <Storyboard x:Key="VideoGridDragLeave">
+            <ColorAnimation Storyboard.TargetName="VideoGridBackground" 
+                            Storyboard.TargetProperty="(Brush).(SolidColorBrush.Color)"
+                            BeginTime="00:00:00.000" To="#00E2F8FF"
+                            Duration="00:00:00.200"/>
+        </Storyboard>
+        <Storyboard x:Key="AudioGridDragEnter">
+            <ColorAnimation Storyboard.TargetName="AudioGridBackground" 
+                            Storyboard.TargetProperty="(Brush).(SolidColorBrush.Color)"
+                            BeginTime="00:00:00.000" To="#FFE2F8FF"
+                            Duration="00:00:00.200"/>
+        </Storyboard>
+        <Storyboard x:Key="AudioGridDragLeave">
+            <ColorAnimation Storyboard.TargetName="AudioGridBackground" 
+                            Storyboard.TargetProperty="(Brush).(SolidColorBrush.Color)"
+                            BeginTime="00:00:00.000" To="#00E2F8FF"
+                            Duration="00:00:00.200"/>
+        </Storyboard>
+        <Storyboard x:Key="SubtitleGridDragEnter">
+            <ColorAnimation Storyboard.TargetName="SubtitleGridBackground" 
+                            Storyboard.TargetProperty="(Brush).(SolidColorBrush.Color)"
+                            BeginTime="00:00:00.000" To="#FFE2F8FF"
+                            Duration="00:00:00.200"/>
+        </Storyboard>
+        <Storyboard x:Key="SubtitleGridDragLeave">
+            <ColorAnimation Storyboard.TargetName="SubtitleGridBackground" 
+                            Storyboard.TargetProperty="(Brush).(SolidColorBrush.Color)"
+                            BeginTime="00:00:00.000" To="#00E2F8FF"
+                            Duration="00:00:00.200"/>
+        </Storyboard>
+        <Storyboard x:Key="ShowProgressBox">
+            <DoubleAnimation Storyboard.TargetName="ProgressBox" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" From="0" To="1"
+                            Duration="00:00:00.500"/>
+        </Storyboard>
+        <!--Converters-->
+        <local:OpacityMaskRectConverter x:Key="OpacityMaskRectConverter"/>
+        <local:InnerRadiusConverter x:Key="InnerRadiusConverter"/>
+    </Window.Resources>
+    <Window.Effect>
+        <DropShadowEffect x:Name="DropShadow" ShadowDepth="1" BlurRadius="16" Direction="270" Opacity="0.5" Color="#FF211613"/>
+    </Window.Effect>
+    <Grid x:Name="WindowGrid">
+        <Grid.OpacityMask>
+            <DrawingBrush Stretch="None">
+                <DrawingBrush.Drawing>
+                    <GeometryDrawing Brush="White">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="5" RadiusY="5">
+                                <RectangleGeometry.Rect>
+                                    <MultiBinding Converter="{StaticResource OpacityMaskRectConverter}">
+                                        <Binding ElementName="WindowGrid" Path="ActualWidth"/>
+                                        <Binding ElementName="WindowGrid" Path="ActualHeight"/>
+                                    </MultiBinding>
+                                </RectangleGeometry.Rect>
+                            </RectangleGeometry>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+        </Grid.OpacityMask>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="34"/>
+        </Grid.RowDefinitions>
+        <!--Header-->
+        <Grid x:Name="Header" Grid.Row="0" Background="#404a58" PreviewMouseLeftButtonDown="Header_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="Header_PreviewMouseLeftButtonUp" Grid.ColumnSpan="2">
+            <TextBlock Text="{StaticResource QEnc}" FontSize="18" Margin="10,0,0,0" VerticalAlignment="Center" Foreground="#ffffff"/>
+            <Grid VerticalAlignment="Top" HorizontalAlignment="Right" Height="24" Width="64" Margin="0,8,5,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <!--Minimize Button-->
+                <Grid x:Name="MinimizeBtn" Grid.Column="0" HorizontalAlignment="Center">
+                    <Grid.Triggers>
+                        <EventTrigger RoutedEvent="Button.MouseEnter">
+                            <BeginStoryboard Storyboard="{StaticResource MinimizeBtnMouseEnter}"/>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.MouseLeave">
+                            <BeginStoryboard Storyboard="{StaticResource MinimizeBtnMouseLeave}"/>
+                        </EventTrigger>
+                    </Grid.Triggers>
+                    <Path x:Name="MinimizeBtnBackground" Fill="#404a58">
+                        <Path.Data>
+                            <PathGeometry>
+                                <PathFigure IsClosed="True" StartPoint="13,0">
+                                    <ArcSegment Point="1,12" Size="12,12"/>
+                                    <ArcSegment Point="13,24" Size="12,12"/>
+                                    <LineSegment Point="19,24"/>
+                                    <ArcSegment Point="31,12" Size="12,12"/>
+                                    <ArcSegment Point="19,0" Size="12,12"/>
+                                </PathFigure>
+                            </PathGeometry>
+                        </Path.Data>
+                    </Path>
+                    <Path x:Name="MinimizeBtnIcon" Fill="#999999">
+                        <Path.Data>
+                            <PathGeometry>
+                                <PathFigure IsClosed="True" StartPoint="11,11">
+                                    <ArcSegment Point="10,12" Size="1,1"/>
+                                    <ArcSegment Point="11,13" Size="1,1"/>
+                                    <LineSegment Point="21,13"/>
+                                    <ArcSegment Point="22,12" Size="1,1"/>
+                                    <ArcSegment Point="21,11" Size="1,1"/>
+                                </PathFigure>
+                            </PathGeometry>
+                        </Path.Data>
+                    </Path>
+                </Grid>
+                <!--Close Button-->
+                <Grid x:Name="CloseBtn" Grid.Column="1" HorizontalAlignment="Center">
+                    <Grid.Triggers>
+                        <EventTrigger RoutedEvent="Button.MouseEnter">
+                            <BeginStoryboard Storyboard="{StaticResource CloseBtnMouseEnter}"/>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.MouseLeave">
+                            <BeginStoryboard Storyboard="{StaticResource CloseBtnMouseLeave}"/>
+                        </EventTrigger>
+                    </Grid.Triggers>
+                    <Path x:Name="CloseBtnBackground" Fill="#404a58">
+                        <Path.Data>
+                            <PathGeometry>
+                                <PathFigure IsClosed="True" StartPoint="13,0">
+                                    <ArcSegment Point="1,12" Size="12,12"/>
+                                    <ArcSegment Point="13,24" Size="12,12"/>
+                                    <LineSegment Point="19,24"/>
+                                    <ArcSegment Point="31,12" Size="12,12"/>
+                                    <ArcSegment Point="19,0" Size="12,12"/>
+                                </PathFigure>
+                            </PathGeometry>
+                        </Path.Data>
+                    </Path>
+                    <Path x:Name="CloseBtnIcon" Fill="#999999">
+                        <Path.Data>
+                            <PathGeometry>
+                                <PathFigure IsClosed="True" StartPoint="12,6">
+                                    <ArcSegment Point="10,8" Size="1,1"/>
+                                    <LineSegment Point="20,18"/>
+                                    <ArcSegment Point="22,16" Size="1,1"/>
+                                </PathFigure>
+                            </PathGeometry>
+                        </Path.Data>
+                    </Path>
+                    <Path Fill="{Binding ElementName=CloseBtnIcon, Path=Fill}">
+                        <Path.Data>
+                            <PathGeometry>
+                                <PathFigure IsClosed="True" StartPoint="22,8">
+                                    <ArcSegment Point="20,6" Size="1,1"/>
+                                    <LineSegment Point="10,16"/>
+                                    <ArcSegment Point="12,18" Size="1,1"/>
+                                </PathFigure>
+                            </PathGeometry>
+                        </Path.Data>
+                    </Path>
+                </Grid>
+            </Grid>
+        </Grid>
+        <!--Main Content Grid-->
+        <Grid x:Name="ContentGrid" Grid.Row="1" Background="#fbfbfb" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="{Binding ElementName=ContentGrid, Path=ActualHeight}"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!--Progress Bar-->
+            <Grid x:Name="ProcessGrid" Grid.Column="0" AllowDrop="True" PreviewDragEnter="Grid_PreviewDragEnter" PreviewDragOver="Grid_PreviewDragOver" PreviewDragLeave="Grid_PreviewDragLeave" PreviewDrop="ProcessGrid_PreviewDrop">
+                <Grid.Background>
+                    <DrawingBrush>
+                        <DrawingBrush.Drawing>
+                            <GeometryDrawing x:Name="ProcessGridBackground" Brush="#00E2F8FF">
+                                <GeometryDrawing.Geometry>
+                                    <RectangleGeometry RadiusX="15" RadiusY="15">
+                                        <RectangleGeometry.Rect>
+                                            <MultiBinding Converter="{StaticResource OpacityMaskRectConverter}">
+                                                <Binding ElementName="ProcessGrid" Path="ActualWidth"/>
+                                                <Binding ElementName="ProcessGrid" Path="ActualHeight"/>
+                                            </MultiBinding>
+                                        </RectangleGeometry.Rect>
+                                    </RectangleGeometry>
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                        </DrawingBrush.Drawing>
+                    </DrawingBrush>
+                </Grid.Background>
+                <Grid Margin="10">
+                    <local:QProgressBar x:Name="ProgressBar" TrackBrush="#e6e6e6" OutterBrush="DeepSkyBlue" Value="65" Margin="20" InnerRadius="{Binding ElementName=ProgressBar, Path=ActualWidth, Converter={StaticResource InnerRadiusConverter}}"/>
+                    <TextBlock x:Name="ProgressBox" Text="{StaticResource QEnc}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="QueueBoxLeft" Width="1*"/>
+                        <ColumnDefinition x:Name="QueueBoxRight" Width="0*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid x:Name="QueueBox" Background="#fbfbfb" Opacity="0.8">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <Border BorderThickness="0,0,1,0" Grid.RowSpan="2" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                        <ListBox x:Name="QueueList" FontSize="18" Width="{Binding ElementName=ProcessGrid, Path=ActualWidth}" HorizontalAlignment="Right" SelectionMode="Single" SelectionChanged="QueueList_SelectionChanged" Background="#fbfbfb"/>
+                        <local:QRadioBox x:Name="JoinQueueBox" InnerBrush="#fbfbfb" Height="30" Width="250" Grid.Row="1" HorizontalAlignment="Right" FontSize="17" Margin="0,0,15,0" SelectionChanged="JoinQueueBox_SelectionChanged"/>
+                    </Grid>
+                </Grid>
+                
+            </Grid>
+            <!--Config Grid-->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <!--Video Config-->
+                <Grid x:Name="VideoGrid" Grid.Row="0" AllowDrop="True" PreviewDragEnter="Grid_PreviewDragEnter" PreviewDragOver="Grid_PreviewDragOver" PreviewDragLeave="Grid_PreviewDragLeave" PreviewDrop="VideoGrid_PreviewDrop">
+                    <Grid.Background>
+                        <DrawingBrush>
+                            <DrawingBrush.Drawing>
+                                <GeometryDrawing x:Name="VideoGridBackground" Brush="#00E2F8FF">
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry RadiusX="15" RadiusY="15">
+                                            <RectangleGeometry.Rect>
+                                                <MultiBinding Converter="{StaticResource OpacityMaskRectConverter}">
+                                                    <Binding ElementName="VideoGrid" Path="ActualWidth"/>
+                                                    <Binding ElementName="VideoGrid" Path="ActualHeight"/>
+                                                </MultiBinding>
+                                            </RectangleGeometry.Rect>
+                                        </RectangleGeometry>
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                            </DrawingBrush.Drawing>
+                        </DrawingBrush>
+                    </Grid.Background>
+                    <Grid Margin="10" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="35"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Text="{StaticResource Video}" Grid.Row="0"/>
+                        <local:StateNote x:Name="VideoNote" HorizontalAlignment="Left" Height="30" Margin="100,0,0,0" VerticalAlignment="Center" Width="30" MouseLeftButtonDown="Note_MouseLeftButtonDown" MouseRightButtonDown="Note_MouseRightButtonDown"/>
+                        <local:QTextBox x:Name="VideoBitrateBox" InnerBrush="#fbfbfb" Height="30" Width="100" Margin="5,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Text="" Grid.Row="1" DataObject.Pasting="NumberBox_Pasting" PreviewKeyDown="NumberBox_PreviewKeyDown" PreviewTextInput="NumberBox_PreviewTextInput"/>
+                        <local:QTextBox x:Name="VideoCRFBox" InnerBrush="#fbfbfb" Height="30" Width="100" Margin="5,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Text="" Grid.Row="1" DataObject.Pasting="NumberBox_Pasting" PreviewKeyDown="NumberBox_PreviewKeyDown" PreviewTextInput="NumberBox_PreviewTextInput"/>
+                        <TextBlock x:Name="VideoUnitBox" Margin="110,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Text="kbps" Grid.Row="1"/>
+                        <local:QRadioBox x:Name="VideoModeBox" InnerBrush="#fbfbfb" Height="30" Width="250" Grid.Row="1" HorizontalAlignment="Left" FontSize="17" Margin="150,2,0,3" SelectionChanged="VideoModeBox_SelectionChanged"/>
+                        <local:QTextBox x:Name="VideoParamBox" InnerBrush="#fbfbfb" Height="30" Margin="5,0" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="17" Text="" Grid.Row="2"/>
+                    </Grid>
+                </Grid>
+                <!--Audio Config-->
+                <Grid x:Name="AudioGrid" Grid.Row="1" AllowDrop="True" PreviewDragEnter="Grid_PreviewDragEnter" PreviewDragOver="Grid_PreviewDragOver" PreviewDragLeave="Grid_PreviewDragLeave" PreviewDrop="AudioGrid_PreviewDrop">
+                    <Grid.Background>
+                        <DrawingBrush>
+                            <DrawingBrush.Drawing>
+                                <GeometryDrawing x:Name="AudioGridBackground" Brush="#00E2F8FF">
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry RadiusX="15" RadiusY="15">
+                                            <RectangleGeometry.Rect>
+                                                <MultiBinding Converter="{StaticResource OpacityMaskRectConverter}">
+                                                    <Binding ElementName="AudioGrid" Path="ActualWidth"/>
+                                                    <Binding ElementName="AudioGrid" Path="ActualHeight"/>
+                                                </MultiBinding>
+                                            </RectangleGeometry.Rect>
+                                        </RectangleGeometry>
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                            </DrawingBrush.Drawing>
+                        </DrawingBrush>
+                    </Grid.Background>
+                    <Grid Margin="10" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="35"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Text="{StaticResource Audio}" Grid.Row="0"/>
+                        <local:StateNote x:Name="AudioNote" HorizontalAlignment="Left" Height="30" Margin="100,0,0,0" VerticalAlignment="Center" Width="30" MouseLeftButtonDown="Note_MouseLeftButtonDown" MouseRightButtonDown="Note_MouseRightButtonDown"/>
+                        <local:QTextBox x:Name="AudioBitrateBox" InnerBrush="#fbfbfb" Height="30" Width="100" Margin="5, 0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Text="" Grid.Row="1" DataObject.Pasting="NumberBox_Pasting" PreviewKeyDown="NumberBox_PreviewKeyDown" PreviewTextInput="NumberBox_PreviewTextInput"/>
+                        <TextBlock Margin="110,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Text="kbps" Grid.Row="1"/>
+                        <local:QTextBox x:Name="AudioParamBox" InnerBrush="#fbfbfb" Height="30" Margin="5,0" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="17" Text="" Grid.Row="2"/>
+                    </Grid>
+                </Grid>
+                <!--Subtitle Config-->
+                <Grid x:Name="SubtitleGrid" Grid.Row="2" AllowDrop="True" PreviewDragEnter="Grid_PreviewDragEnter" PreviewDragOver="Grid_PreviewDragOver" PreviewDragLeave="Grid_PreviewDragLeave" PreviewDrop="SubtitleGrid_PreviewDrop">
+                    <Grid.Background>
+                        <DrawingBrush>
+                            <DrawingBrush.Drawing>
+                                <GeometryDrawing x:Name="SubtitleGridBackground" Brush="#00E2F8FF">
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry RadiusX="15" RadiusY="15">
+                                            <RectangleGeometry.Rect>
+                                                <MultiBinding Converter="{StaticResource OpacityMaskRectConverter}">
+                                                    <Binding ElementName="SubtitleGrid" Path="ActualWidth"/>
+                                                    <Binding ElementName="SubtitleGrid" Path="ActualHeight"/>
+                                                </MultiBinding>
+                                            </RectangleGeometry.Rect>
+                                        </RectangleGeometry>
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                            </DrawingBrush.Drawing>
+                        </DrawingBrush>
+                    </Grid.Background>
+                    <Grid Margin="10" VerticalAlignment="Center" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Text="{StaticResource Subtitle}" Grid.Row="0"/>
+                        <local:StateNote x:Name="SubtitleNote" HorizontalAlignment="Left" Height="30" Margin="100,0,0,0" VerticalAlignment="Center" Width="30" MouseLeftButtonDown="Note_MouseLeftButtonDown" MouseRightButtonDown="Note_MouseRightButtonDown"/>
+                    </Grid>
+                </Grid>
+                <Grid x:Name="ConfigOverlay" Background="Transparent" Grid.RowSpan="3" Visibility="Hidden"/>
+            </Grid>
+            <!--Overlay Layer-->
+            <Grid x:Name="Overlay" Background="Transparent" Grid.ColumnSpan="2" Visibility="Hidden"/>
+        </Grid>
+        <!--Status Grid-->
+        <Grid Grid.Row="2" Background="#f4f4f4" Grid.ColumnSpan="2">
+            <local:QRadioBox x:Name="ProcessModeBox" InnerBrush="#fbfbfb" Height="30" Width="250" Grid.Row="1" HorizontalAlignment="Left" FontSize="17" Margin="15,0,0,0" SelectionChanged="ProcessModeBox_SelectionChanged"/>
+            <local:QRadioBox x:Name="StartBox" InnerBrush="#fbfbfb" Height="30" Width="250" Grid.Row="1" HorizontalAlignment="Right" FontSize="17" Margin="0,0,15,0" SelectionChanged="StartBox_SelectionChanged"/>
+        </Grid>
+    </Grid>
+</Window>

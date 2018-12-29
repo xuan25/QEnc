@@ -1,0 +1,73 @@
+﻿<Window x:Class="QEncLogReader.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QEncLogReader"
+        mc:Ignorable="d"
+        Title="QEncLogReader" Height="450" Width="800" PreviewDragEnter="Window_PreviewDragEnter" PreviewDragOver="Window_PreviewDragOver" PreviewDrop="Window_PreviewDrop">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border BorderThickness="1" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                <TextBlock Grid.Row="0" Text="Video: " VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                <TextBlock x:Name="VideoStateBox" Grid.Row="0" Text="UNKNOW" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40,0,0,0"/>
+                <TextBlock x:Name="VideoBitrateBox" Grid.Row="0" Text="UNKNOW" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="100,0,0,0"/>
+                <TextBlock x:Name="VideoModeBox" Grid.Row="0" Text="UNKNOW_MODE" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="160,0,0,0"/>
+                <TextBox x:Name="VideoPathBox" Grid.Row="1" Text="UNKNOW_PATH" TextWrapping="NoWrap"/>
+                <TextBox x:Name="VideoParamBox" Grid.Row="2" Text="UNKNOW_PARAM" TextWrapping="NoWrap"/>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border BorderThickness="1" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                <TextBlock Grid.Row="0" Text="Audio: " VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                <TextBlock x:Name="AudioStateBox" Grid.Row="0" Text="UNKNOW" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40,0,0,0"/>
+                <TextBlock x:Name="AudioBitrateBox" Grid.Row="0" Text="UNKNOW" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="100,0,0,0"/>
+                <TextBox x:Name="AudioPathBox" Grid.Row="1" Text="UNKNOW_PATH" TextWrapping="NoWrap"/>
+                <TextBox x:Name="AudioParamBox" Grid.Row="2" Text="UNKNOW_PARAM" TextWrapping="NoWrap"/>
+            </Grid>
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border BorderThickness="1" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                <TextBlock Grid.Row="0" Text="Subtitle: " VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                <TextBlock x:Name="SubtitleStateBox" Grid.Row="0" Text="UNKNOW" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="50,0,0,0"/>
+                <TextBox x:Name="SubtitlePathBox" Grid.Row="1" Text="UNKNOW_PATH" TextWrapping="NoWrap"/>
+                <TextBox x:Name="SubtitleParamBox" Grid.Row="2" Text="UNKNOW_PARAM" TextWrapping="NoWrap"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <TextBox x:Name="CmdLogBox" Text="NO_CMD_DATA"/>
+        </Grid>
+        <Grid Grid.Row="2">
+            <TextBox x:Name="FFLogBox" Text="NO_FF_DATA"/>
+        </Grid>
+        <Grid Grid.Row="3">
+            <TextBlock x:Name="TimeBox" Text="UNKNOW_TIME" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+        </Grid>
+    </Grid>
+
+</Window>

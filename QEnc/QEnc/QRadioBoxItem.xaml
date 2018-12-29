@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="QEnc.QRadioBoxItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QEnc"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="100">
+    <UserControl.Resources>
+        <local:ToRect x:Key="ToRect"/>
+        <local:ToBorderedRect x:Key="ToBorderedRect"/>
+        <local:ToRadius x:Key="ToRadius"/>
+        <local:ToBorderedRadius x:Key="ToBorderedRadius"/>
+    </UserControl.Resources>
+    <Grid x:Name="RadioBtn" Background="Transparent" MouseLeftButtonDown="RadioBtn_MouseLeftButtonDown" MouseEnter="RadioBtn_MouseEnter">
+        <TextBlock x:Name="TextArea" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+    </Grid>
+</UserControl>

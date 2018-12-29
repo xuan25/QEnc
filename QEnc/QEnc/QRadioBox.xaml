@@ -1,0 +1,90 @@
+﻿<UserControl x:Class="QEnc.QRadioBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QEnc"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="200">
+    <UserControl.Resources>
+        <local:ToRect x:Key="ToRect"/>
+        <local:ToBorderedRect x:Key="ToBorderedRect"/>
+        <local:ToRadius x:Key="ToRadius"/>
+        <local:ToBorderedRadius x:Key="ToBorderedRadius"/>
+    </UserControl.Resources>
+    <Grid x:Name="RadioBox" SizeChanged="RadioBox_SizeChanged">
+        <Grid.OpacityMask>
+            <DrawingBrush>
+                <DrawingBrush.Drawing>
+                    <GeometryDrawing Brush="White">
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="{Binding ElementName=RadioBox, Path=ActualHeight, Converter={StaticResource ToRadius}}" RadiusY="{Binding ElementName=RadioBox, Path=ActualHeight, Converter={StaticResource ToRadius}}">
+                                <RectangleGeometry.Rect>
+                                    <MultiBinding Converter="{StaticResource ToRect}">
+                                        <Binding ElementName="RadioBox" Path="ActualWidth"/>
+                                        <Binding ElementName="RadioBox" Path="ActualHeight"/>
+                                    </MultiBinding>
+                                </RectangleGeometry.Rect>
+                            </RectangleGeometry>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+        </Grid.OpacityMask>
+        <Grid.Background>
+            <DrawingBrush>
+                <DrawingBrush.Drawing>
+                    <DrawingGroup>
+                        <GeometryDrawing>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush x:Name="borderBrush" Color="#FFABADB3"/>
+                            </GeometryDrawing.Brush>
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry>
+                                    <RectangleGeometry.Rect>
+                                        <MultiBinding Converter="{StaticResource ToRect}">
+                                            <Binding ElementName="RadioBox" Path="ActualWidth"/>
+                                            <Binding ElementName="RadioBox" Path="ActualHeight"/>
+                                        </MultiBinding>
+                                    </RectangleGeometry.Rect>
+                                </RectangleGeometry>
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                        <GeometryDrawing>
+                            <GeometryDrawing.Brush>
+                                <SolidColorBrush x:Name="highlightBrush" Color="#00000000"/>
+                            </GeometryDrawing.Brush>
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry>
+                                    <RectangleGeometry.Rect>
+                                        <MultiBinding Converter="{StaticResource ToRect}">
+                                            <Binding ElementName="RadioBox" Path="ActualWidth"/>
+                                            <Binding ElementName="RadioBox" Path="ActualHeight"/>
+                                        </MultiBinding>
+                                    </RectangleGeometry.Rect>
+                                </RectangleGeometry>
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                        <GeometryDrawing x:Name="InnerDrawing" Brush="White">
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry RadiusX="{Binding ElementName=RadioBox, Path=ActualHeight, Converter={StaticResource ToBorderedRadius}}" RadiusY="{Binding ElementName=RadioBox, Path=ActualHeight, Converter={StaticResource ToBorderedRadius}}">
+                                    <RectangleGeometry.Rect>
+                                        <MultiBinding Converter="{StaticResource ToBorderedRect}">
+                                            <Binding ElementName="RadioBox" Path="ActualWidth"/>
+                                            <Binding ElementName="RadioBox" Path="ActualHeight"/>
+                                        </MultiBinding>
+                                    </RectangleGeometry.Rect>
+                                </RectangleGeometry>
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                        <GeometryDrawing x:Name="SelectedDrawing" Brush="DeepSkyBlue">
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry x:Name="SelectedRect" RadiusX="{Binding ElementName=RadioBox, Path=ActualHeight, Converter={StaticResource ToBorderedRadius}}" RadiusY="{Binding ElementName=RadioBox, Path=ActualHeight, Converter={StaticResource ToBorderedRadius}}"/>
+                            </GeometryDrawing.Geometry>
+                        </GeometryDrawing>
+                    </DrawingGroup>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+        </Grid.Background>
+    </Grid>
+</UserControl>

@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QEnc", "QEnc\QEnc.csproj", "{62BD60AF-F3F3-4CEE-AC7D-87CFD2CBEEB1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{793B5917-DEA7-4EAC-95C7-8D7641D5AB1C} = {793B5917-DEA7-4EAC-95C7-8D7641D5AB1C}
+		{F5CACB2F-F682-4D3E-8510-BC52F52B25B8} = {F5CACB2F-F682-4D3E-8510-BC52F52B25B8}
+		{097A29AC-55BA-4E55-8EFD-8E2FF6537550} = {097A29AC-55BA-4E55-8EFD-8E2FF6537550}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QEncLogReader", "QEncLogReader\QEncLogReader.csproj", "{F5CACB2F-F682-4D3E-8510-BC52F52B25B8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{097A29AC-55BA-4E55-8EFD-8E2FF6537550} = {097A29AC-55BA-4E55-8EFD-8E2FF6537550}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QEncInfo", "QEncInfo\QEncInfo.csproj", "{097A29AC-55BA-4E55-8EFD-8E2FF6537550}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GZCompressor", "GZCompressor\GZCompressor.csproj", "{793B5917-DEA7-4EAC-95C7-8D7641D5AB1C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62BD60AF-F3F3-4CEE-AC7D-87CFD2CBEEB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62BD60AF-F3F3-4CEE-AC7D-87CFD2CBEEB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62BD60AF-F3F3-4CEE-AC7D-87CFD2CBEEB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62BD60AF-F3F3-4CEE-AC7D-87CFD2CBEEB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5CACB2F-F682-4D3E-8510-BC52F52B25B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5CACB2F-F682-4D3E-8510-BC52F52B25B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5CACB2F-F682-4D3E-8510-BC52F52B25B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5CACB2F-F682-4D3E-8510-BC52F52B25B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{097A29AC-55BA-4E55-8EFD-8E2FF6537550}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{097A29AC-55BA-4E55-8EFD-8E2FF6537550}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{097A29AC-55BA-4E55-8EFD-8E2FF6537550}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{097A29AC-55BA-4E55-8EFD-8E2FF6537550}.Release|Any CPU.Build.0 = Release|Any CPU
+		{793B5917-DEA7-4EAC-95C7-8D7641D5AB1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{793B5917-DEA7-4EAC-95C7-8D7641D5AB1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{793B5917-DEA7-4EAC-95C7-8D7641D5AB1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{793B5917-DEA7-4EAC-95C7-8D7641D5AB1C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {07F5C20C-ADE8-4A5D-9B99-0BD522D0D363}
+	EndGlobalSection
+EndGlobal

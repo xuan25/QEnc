@@ -1,0 +1,169 @@
+﻿<UserControl x:Class="QEnc.StateNote"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QEnc"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="30">
+    <UserControl.Resources>
+        <Storyboard x:Key="HideIcon">
+            <DoubleAnimation Storyboard.TargetName="LoadedIcon" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" To="0"
+                            Duration="00:00:00.000"/>
+            <DoubleAnimation Storyboard.TargetName="ProcessingIcon" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" To="0"
+                            Duration="00:00:00.000"/>
+            <DoubleAnimation Storyboard.TargetName="CopyIcon" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" To="0"
+                            Duration="00:00:00.000"/>
+            <DoubleAnimation Storyboard.TargetName="UnavailableIcon" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" To="0"
+                            Duration="00:00:00.000"/>
+        </Storyboard>
+        <Storyboard x:Key="ShowLoadedIcon">
+            <DoubleAnimation Storyboard.TargetName="LoadedIcon" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" To="1"
+                            Duration="00:00:00.200"/>
+            <DoubleAnimation Storyboard.TargetName="ProcessingIcon" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" To="0"
+                            Duration="00:00:00.000"/>
+            <DoubleAnimation Storyboard.TargetName="CopyIcon" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" To="0"
+                            Duration="00:00:00.000"/>
+            <DoubleAnimation Storyboard.TargetName="UnavailableIcon" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" To="0"
+                            Duration="00:00:00.000"/>
+        </Storyboard>
+        <Storyboard x:Key="ShowProcessingIcon">
+            <DoubleAnimation Storyboard.TargetName="LoadedIcon" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" To="0"
+                            Duration="00:00:00.000"/>
+            <DoubleAnimation Storyboard.TargetName="ProcessingIcon" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" To="1"
+                            Duration="00:00:00.200"/>
+            <DoubleAnimation Storyboard.TargetName="CopyIcon" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" To="0"
+                            Duration="00:00:00.000"/>
+            <DoubleAnimation Storyboard.TargetName="UnavailableIcon" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" To="0"
+                            Duration="00:00:00.000"/>
+        </Storyboard>
+        <Storyboard x:Key="ShowCopyIcon">
+            <DoubleAnimation Storyboard.TargetName="LoadedIcon" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" To="0"
+                            Duration="00:00:00.000"/>
+            <DoubleAnimation Storyboard.TargetName="ProcessingIcon" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" To="0"
+                            Duration="00:00:00.000"/>
+            <DoubleAnimation Storyboard.TargetName="CopyIcon" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" To="1"
+                            Duration="00:00:00.200"/>
+            <DoubleAnimation Storyboard.TargetName="UnavailableIcon" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" To="0"
+                            Duration="00:00:00.000"/>
+        </Storyboard>
+        <Storyboard x:Key="ShowUnavailableIcon">
+            <DoubleAnimation Storyboard.TargetName="LoadedIcon" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" To="0"
+                            Duration="00:00:00.000"/>
+            <DoubleAnimation Storyboard.TargetName="ProcessingIcon" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" To="0"
+                            Duration="00:00:00.000"/>
+            <DoubleAnimation Storyboard.TargetName="CopyIcon" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" To="0"
+                            Duration="00:00:00.000"/>
+            <DoubleAnimation Storyboard.TargetName="UnavailableIcon" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" To="1"
+                            Duration="00:00:00.200"/>
+        </Storyboard>
+    </UserControl.Resources>
+    <Grid Background="Transparent">
+        <Path x:Name="LoadedIcon" Fill="LawnGreen">
+            <Path.Data>
+                <PathGeometry>
+                    <PathFigure IsClosed="True" StartPoint="6,13.5">
+                        <LineSegment Point="12.5,19"/>
+                        <LineSegment Point="24.5,6"/>
+                        <LineSegment Point="29,10"/>
+                        <LineSegment Point="13,27"/>
+                        <LineSegment Point="2,18"/>
+                    </PathFigure>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+        <Path x:Name="ProcessingIcon" Fill="DeepSkyBlue">
+            <Path.Data>
+                <GeometryGroup>
+                    <PathGeometry>
+                        <PathFigure IsClosed="True" StartPoint="15,2">
+                            <ArcSegment Point="15,28" Size="11,11"/>
+                            <LineSegment Point="15,22"/>
+                            <ArcSegment Point="15,8" Size="7,7" SweepDirection="Clockwise"/>
+                        </PathFigure>
+                    </PathGeometry>
+                    <PathGeometry>
+                        <PathFigure IsClosed="True" StartPoint="15,2">
+                            <ArcSegment Point="15,28" Size="11,11" SweepDirection="Clockwise"/>
+                            <LineSegment Point="15,22"/>
+                            <ArcSegment Point="15,8" Size="7,7"/>
+                        </PathFigure>
+                    </PathGeometry>
+                </GeometryGroup>
+            </Path.Data>
+        </Path>
+        <Path x:Name="CopyIcon" Fill="Orange">
+            <Path.Data>
+                <PathGeometry>
+                    <PathFigure IsClosed="True" StartPoint="3,12">
+                        <LineSegment Point="27,12"/>
+                        <LineSegment Point="27,18"/>
+                        <LineSegment Point="3,18"/>
+                    </PathFigure>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+        <Path x:Name="UnavailableIcon" Fill="Red">
+            <Path.Data>
+                <PathGeometry>
+                    <PathFigure IsClosed="True" StartPoint="4,8">
+                        <LineSegment Point="22,26"/>
+                        <LineSegment Point="26,22"/>
+                        <LineSegment Point="8,4"/>
+                    </PathFigure>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+        <Path Fill="{Binding ElementName=UnavailableIcon, Path=Fill}" Opacity="{Binding ElementName=UnavailableIcon, Path=Opacity}" Visibility="{Binding ElementName=UnavailableIcon, Path=Visibility}">
+            <Path.Data>
+                <PathGeometry>
+                    <PathFigure IsClosed="True" StartPoint="26,8">
+                        <LineSegment Point="8,26"/>
+                        <LineSegment Point="4,22"/>
+                        <LineSegment Point="22,4"/>
+                    </PathFigure>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+    </Grid>
+</UserControl>
