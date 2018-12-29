@@ -184,7 +184,7 @@ namespace QEnc
                     if (encParam.VideoMode == EncParam.VideoModes.CRF)
                         finalCmd += " -c:v libx264 -crf " + encParam.VideoCRF;
                     else if (encParam.VideoMode == EncParam.VideoModes.B1PASS)
-                        finalCmd += " -c:v libx264 -b:v " + encParam.VideoBitrate;
+                        finalCmd += " -c:v libx264 -b:v " + encParam.VideoBitrate + "k";
                     else
                         finalCmd += " -c:v libx264 -b:v " + encParam.VideoBitrate + "k -x264opts \"pass=2\"";
                 }
