@@ -142,6 +142,17 @@ namespace QEnc
             int loadIndex = 0;
             int videoIndex = -1, audioIndex = -1;
 
+            //working directory
+            if (encNote.Audio != EncNote.TrackStates.None)
+                workingDirectory = encParam.AudioPath + "_QEncTemp\\";
+            else if (encNote.Video != EncNote.TrackStates.None)
+                workingDirectory = encParam.VideoPath + "_QEncTemp\\";
+            else if (encNote.Subtitle != EncNote.TrackStates.None)
+                workingDirectory = encParam.SubtitlePath + "_QEncTemp\\";
+            if (!Directory.Exists(workingDirectory))
+                Directory.CreateDirectory(workingDirectory);
+            Environment.CurrentDirectory = workingDirectory;
+
             //input
             if (encNote.Video != EncNote.TrackStates.None)
             {
@@ -149,21 +160,21 @@ namespace QEnc
                 if (encParam.VideoMode == EncParam.VideoModes.B2PASS)
                 {
                     if(encParam.VideoParam.Trim() == "")
-                        cmdList.Add("\"" + ffmpegPath + "\" -y -i \"" + encParam.VideoPath + "\" -map 0:v -c:v libx264 -b:v " + encParam.VideoBitrate + "k -x264opts \"pass=1\" \"" + encParam.VideoPath + "_temp.mp4\"");
+                        cmdList.Add("\"" + ffmpegPath + "\" -y -i \"" + encParam.VideoPath + "\" -map 0:v -c:v libx264 -b:v " + encParam.VideoBitrate + "k -x264opts \"pass=1\" \"temp.mp4\"");
                     else
-                        cmdList.Add("\"" + ffmpegPath + "\" -y -i \"" + encParam.VideoPath + "\" -map 0:v -c:v libx264 -b:v " + encParam.VideoBitrate + "k -x264opts \"pass=1:" + encParam.VideoParam + "\" \"" + encParam.VideoPath + "_temp.mp4\"");
+                        cmdList.Add("\"" + ffmpegPath + "\" -y -i \"" + encParam.VideoPath + "\" -map 0:v -c:v libx264 -b:v " + encParam.VideoBitrate + "k -x264opts \"pass=1:" + encParam.VideoParam + "\" \"temp.mp4\"");
                 }
                 else if (encParam.VideoMode == EncParam.VideoModes.B3PASS)
                 {
                     if(encParam.VideoParam.Trim() == "")
                     {
-                        cmdList.Add("\"" + ffmpegPath + "\" -y -i \"" + encParam.VideoPath + "\" -map 0:v -c:v libx264 -b:v " + encParam.VideoBitrate + "k -x264opts \"pass=1\" \"" + encParam.VideoPath + "_temp.mp4\"");
-                        cmdList.Add("\"" + ffmpegPath + "\" -y -i \"" + encParam.VideoPath + "\" -map 0:v -c:v libx264 -b:v " + encParam.VideoBitrate + "k -x264opts \"pass=3\" \"" + encParam.VideoPath + "_temp.mp4\"");
+                        cmdList.Add("\"" + ffmpegPath + "\" -y -i \"" + encParam.VideoPath + "\" -map 0:v -c:v libx264 -b:v " + encParam.VideoBitrate + "k -x264opts \"pass=1\" \"temp.mp4\"");
+                        cmdList.Add("\"" + ffmpegPath + "\" -y -i \"" + encParam.VideoPath + "\" -map 0:v -c:v libx264 -b:v " + encParam.VideoBitrate + "k -x264opts \"pass=3\" \"temp.mp4\"");
                     }
                     else
                     {
-                        cmdList.Add("\"" + ffmpegPath + "\" -y -i \"" + encParam.VideoPath + "\" -map 0:v -c:v libx264 -b:v " + encParam.VideoBitrate + "k -x264opts \"pass=1:" + encParam.VideoParam + "\" \"" + encParam.VideoPath + "_temp.mp4\"");
-                        cmdList.Add("\"" + ffmpegPath + "\" -y -i \"" + encParam.VideoPath + "\" -map 0:v -c:v libx264 -b:v " + encParam.VideoBitrate + "k -x264opts \"pass=3:" + encParam.VideoParam + "\" \"" + encParam.VideoPath + "_temp.mp4\"");
+                        cmdList.Add("\"" + ffmpegPath + "\" -y -i \"" + encParam.VideoPath + "\" -map 0:v -c:v libx264 -b:v " + encParam.VideoBitrate + "k -x264opts \"pass=1:" + encParam.VideoParam + "\" \"temp.mp4\"");
+                        cmdList.Add("\"" + ffmpegPath + "\" -y -i \"" + encParam.VideoPath + "\" -map 0:v -c:v libx264 -b:v " + encParam.VideoBitrate + "k -x264opts \"pass=3:" + encParam.VideoParam + "\" \"temp.mp4\"");
                     }
                 }
                 videoIndex = loadIndex;
@@ -234,29 +245,6 @@ namespace QEnc
                 i++;
             }
             finalCmd += " \"" + outout + "\"";
-
-            //working directory
-            if (encNote.Audio != EncNote.TrackStates.None)
-            {
-                workingDirectory = encParam.AudioPath + "_QEncTemp\\";
-                if (!Directory.Exists(workingDirectory))
-                    Directory.CreateDirectory(workingDirectory);
-                Environment.CurrentDirectory = workingDirectory;
-            }
-            else if (encNote.Video != EncNote.TrackStates.None)
-            {
-                workingDirectory = encParam.VideoPath + "_QEncTemp\\";
-                if (!Directory.Exists(workingDirectory))
-                    Directory.CreateDirectory(workingDirectory);
-                Environment.CurrentDirectory = workingDirectory;
-            }
-            else if (encNote.Subtitle != EncNote.TrackStates.None)
-            {
-                workingDirectory = encParam.SubtitlePath + "_QEncTemp\\";
-                if (!Directory.Exists(workingDirectory))
-                    Directory.CreateDirectory(workingDirectory);
-                Environment.CurrentDirectory = workingDirectory;
-            }
 
             if (encNote.Subtitle != EncNote.TrackStates.None)
             {
