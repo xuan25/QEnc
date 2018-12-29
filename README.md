@@ -17,7 +17,7 @@ It use FFMPEG as decoder/encoder and allow any formats of Video, Audio or Subtit
 - Use Drag-and-drop to import files
 - Supported Language: English, Simplified Chinese 
 
-![screenshot](screenshots\screenshot.png)
+![screenshot](screenshots/screenshot.png)
 
 ## Quick Start
 
@@ -62,7 +62,7 @@ QEnc是一种基于拖放操作的视频压制和封装工具
  - 使用拖放功能导入文件
  - 支持的语言：英语，简体中文
 
-![screenshot](screenshots\screenshot_zh-CN.png)
+![screenshot](screenshots/screenshot_zh-CN.png)
 
 ##快速开始
 
