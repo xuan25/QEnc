@@ -88,7 +88,10 @@ namespace QEnc
             process.Start();
             process.StandardInput.WriteLine(cmd + " & exit");
             string result = process.StandardError.ReadToEnd();
-            return Regex.Matches(result, "(Stream #(?<FileNum>[0-9]+):(?<TrackNum>[0-9]+)(\\((?<TrackName>.+)\\))?: (?<Type>Video): )|(Stream #(?<FileNum>[0-9]+):(?<TrackNum>[0-9]+)(\\((?<TrackName>.+)\\))?: (?<Type>Audio): )|(Stream #(?<FileNum>[0-9]+):(?<TrackNum>[0-9]+)(\\((?<TrackName>.+)\\))?: )");
+            return Regex.Matches(result, 
+                "(Stream #(?<FileNum>[0-9]+):(?<TrackNum>[0-9]+)(\\((?<TrackName>.+)\\))?: (?<Type>Video): )|" +
+                "(Stream #(?<FileNum>[0-9]+):(?<TrackNum>[0-9]+)(\\((?<TrackName>.+)\\))?: (?<Type>Audio): )|" +
+                "(Stream #(?<FileNum>[0-9]+):(?<TrackNum>[0-9]+)(\\((?<TrackName>.+)\\))?: (?<Type>Subtitle): )");
         }
 
         public static bool IsVideoAvailable(string path)
