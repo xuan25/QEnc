@@ -15,7 +15,7 @@ It use FFMPEG as decoder/encoder and allow any formats of Video, Audio or Subtit
 - Smooth animation
 
 - Use Drag-and-drop to import files
-- Supported Language: English, Simplified Chinese, Japanese
+- Supported Language: English, Simplified Chinese, Traditional Chinese, Japanese
 
 ![screenshot](screenshots/screenshot.png)
 
@@ -25,7 +25,7 @@ Drag the file to the Video/Audio/Subtitle config area to import the file. The so
 
 Hint: Drag the file to the Left side can import is Video, Audio and Subtitle at the same time.
 
-##About Status Icon
+## About Status Icon
 
 - Green tick = Loaded and Ready to encode
 - Orange horizontal line = Loaded and Do not encode, just copy the stream
@@ -40,7 +40,7 @@ Left click to switch the processing mode between use encoder and copy stream
 
 The first line of both Video config and Audio config is the quality. The second line of the Video config is the additional parameters pass to the X264 encoder. (Use the format "[Name1]=[Value1]:[Name2]=[Value2]...") However, the second line of Audio config is reserved.
 
-##About queue
+## About queue
 
 Click *Multi* button to expand Queue panel (It also affect the process mode when you click the *Start* button). Click *Queue* button to add current config into the queue. Click *Not queue* button to remove.
 
@@ -60,7 +60,7 @@ QEnc是一种基于拖放操作的视频压制和封装工具
 - 使用方便
  - 流畅的动画
  - 使用拖放功能导入文件
- - 支持的语言：英语，简体中文，日文
+ - 支持的语言：英语，简体中文，繁体中文，日文
 
 ![screenshot](screenshots/screenshot_zh-CN.png)
 

@@ -1,0 +1,25 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:QEnc.Lang"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="QEnc">QEnc</sys:String>
+    <sys:String x:Key="Video">視頻</sys:String>
+    <sys:String x:Key="Audio">音頻</sys:String>
+    <sys:String x:Key="Subtitle">字幕</sys:String>
+    <sys:String x:Key="VCRF">CRF</sys:String>
+    <sys:String x:Key="B1Pass">1-Pass</sys:String>
+    <sys:String x:Key="B2Pass">2-Pass</sys:String>
+    <sys:String x:Key="B3Pass">3-Pass</sys:String>
+    <sys:String x:Key="crf">crf</sys:String>
+    <sys:String x:Key="kbps">kbps</sys:String>
+    <sys:String x:Key="Config">配置</sys:String>
+    <sys:String x:Key="Start">開始</sys:String>
+    <sys:String x:Key="Single">單個</sys:String>
+    <sys:String x:Key="Multi">批量</sys:String>
+    <sys:String x:Key="Not_Queue">未隊列</sys:String>
+    <sys:String x:Key="Queue">隊列</sys:String>
+    <sys:String x:Key="New_Queue_Item">新隊列項目</sys:String>
+    <sys:String x:Key="No_Video">無視頻</sys:String>
+    <sys:String x:Key="No_Audio">無音頻</sys:String>
+    <sys:String x:Key="No_Subtitle">無字幕</sys:String>
+</ResourceDictionary>
