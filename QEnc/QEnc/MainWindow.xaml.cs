@@ -52,6 +52,12 @@ namespace QEnc
         {
             InitializeComponent();
 
+            Binding minWidthBinding = new Binding();
+            minWidthBinding.ElementName = "QEnc";
+            minWidthBinding.Path = new PropertyPath("ActualHeight");
+            minWidthBinding.Converter = new MinWidthConverter();
+            this.SetBinding(Window.MinWidthProperty, minWidthBinding);
+
             VideoModeBox.AddSelection(Application.Current.FindResource("VCRF").ToString());
             VideoModeBox.AddSelection(Application.Current.FindResource("B1Pass").ToString());
             VideoModeBox.AddSelection(Application.Current.FindResource("B2Pass").ToString());
@@ -843,6 +849,20 @@ namespace QEnc
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return (double)value / 2 * 2/3;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+    public class MinWidthConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            Console.WriteLine(value);
+            return (double)value + 350;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

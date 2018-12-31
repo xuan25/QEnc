@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:QEnc"
         xmlns:props="clr-namespace:QEnc.Properties"
         mc:Ignorable="d"
-        Title="QEnc" Height="450" Width="800" WindowStyle="None" ResizeMode="CanResizeWithGrip" Background="Transparent" AllowsTransparency="True" BorderThickness="16" Loaded="Window_Loaded" Closing="Window_Closing">
+        x:Name="QEnc" Title="QEnc" Height="450" Width="800" MinHeight="450" WindowStyle="None" ResizeMode="CanResizeWithGrip" Background="Transparent" AllowsTransparency="True" BorderThickness="16" Loaded="Window_Loaded" Closing="Window_Closing">
     <Window.Resources>
         <!--Animations-->
         <Storyboard x:Key="MinimizeBtnMouseEnter">
@@ -106,6 +106,7 @@
         <!--Converters-->
         <local:OpacityMaskRectConverter x:Key="OpacityMaskRectConverter"/>
         <local:InnerRadiusConverter x:Key="InnerRadiusConverter"/>
+        <local:MinWidthConverter x:Key="MinWidthConverter"/>
     </Window.Resources>
     <Window.Effect>
         <DropShadowEffect x:Name="DropShadow" ShadowDepth="1" BlurRadius="16" Direction="270" Opacity="0.5" Color="#FF211613"/>
