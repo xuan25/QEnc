@@ -9,6 +9,18 @@
         x:Name="QEnc" Title="QEnc" Height="450" Width="800" MinHeight="450" WindowStyle="None" ResizeMode="CanResizeWithGrip" Background="Transparent" AllowsTransparency="True" BorderThickness="16" Loaded="Window_Loaded" Closing="Window_Closing">
     <Window.Resources>
         <!--Animations-->
+        <Storyboard x:Key="ShowWindow">
+            <DoubleAnimation Storyboard.TargetName="QEnc" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" To="1"
+                            Duration="00:00:00.200"/>
+        </Storyboard>
+        <Storyboard x:Key="HideWindow">
+            <DoubleAnimation Storyboard.TargetName="QEnc" 
+                            Storyboard.TargetProperty="Opacity"
+                            BeginTime="00:00:00.000" To="0"
+                            Duration="00:00:00.200"/>
+        </Storyboard>
         <Storyboard x:Key="MinimizeBtnMouseEnter">
             <ColorAnimation Storyboard.TargetName="MinimizeBtnBackground" 
                             Storyboard.TargetProperty="(Fill).(SolidColorBrush.Color)"

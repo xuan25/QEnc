@@ -28,6 +28,72 @@ namespace QEnc
         public delegate void DelProgressChanged(double value);
         public event DelProgressChanged ProgressChanged;
 
+        Thread showShadowThread;
+        bool shadowShowed = true;
+        private void ShowShadow()
+        {
+            shadowShowed = true;
+            if (showShadowThread != null)
+                showShadowThread.Abort();
+            showShadowThread = new Thread(delegate ()
+            {
+                double i = 0;
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    i = DropShadow.ShadowDepth;
+                }));
+                while (i < 1)
+                {
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        DropShadow.ShadowDepth = i;
+                        DropShadow.BlurRadius = i * 16;
+                    }));
+                    i = i + 0.05;
+                    Thread.Sleep(20);
+                }
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    DropShadow.Opacity = 0.5;
+                    DropShadow.ShadowDepth = 1;
+                    DropShadow.BlurRadius = 16;
+                }));
+            });
+            showShadowThread.Start();
+        }
+
+        private void HideShadow()
+        {
+            shadowShowed = false;
+            if (showShadowThread != null)
+                showShadowThread.Abort();
+            showShadowThread = new Thread(delegate ()
+            {
+                double i = 0;
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    i = DropShadow.ShadowDepth;
+                }));
+                while (i > 0)
+                {
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        DropShadow.ShadowDepth = i;
+                        DropShadow.BlurRadius = i * 16;
+                    }));
+                    i = i - 0.05;
+                    Thread.Sleep(20);
+                }
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    DropShadow.Opacity = 0;
+                    DropShadow.ShadowDepth = 0;
+                    DropShadow.BlurRadius = 0;
+                }));
+            });
+            showShadowThread.Start();
+        }
+
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(double), typeof(QProgressBar), new FrameworkPropertyMetadata(0.0));
         public double Value
         {
@@ -62,7 +128,10 @@ namespace QEnc
                 HeaderOrigin.Visibility = Visibility.Visible;
                 PathR.Visibility = Visibility.Visible;
             }
-                
+            if (Value == 100 && shadowShowed)
+                HideShadow();
+            else if (!shadowShowed)
+                ShowShadow();
         }
         DependencyPropertyDescriptor ValuePropertyDescriptor = DependencyPropertyDescriptor.FromProperty(ValueProperty, typeof(QProgressBar));
 
@@ -347,6 +416,25 @@ namespace QEnc
             double xHeader = x * (radius - radiusHeader) + radius - radiusHeader;
             double yHeader = y * (radius - radiusHeader) + radius - radiusHeader;
             Header.Margin = new Thickness(xHeader, yHeader, 0, 0);
+        }
+
+        public void Stop()
+        {
+            if(showShadowThread != null)
+            {
+                showShadowThread.Abort();
+                showShadowThread.Join();
+            }
+            if (barAnimationThread != null)
+            {
+                barAnimationThread.Abort();
+                barAnimationThread.Join();
+            }
+            if (opacityAnimationThread != null)
+            {
+                opacityAnimationThread.Abort();
+                opacityAnimationThread.Join();
+            }
         }
 
         private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)

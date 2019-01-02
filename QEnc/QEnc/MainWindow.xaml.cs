@@ -52,6 +52,8 @@ namespace QEnc
         {
             InitializeComponent();
 
+            this.Opacity = 0;
+
             Binding minWidthBinding = new Binding();
             minWidthBinding.ElementName = "QEnc";
             minWidthBinding.Path = new PropertyPath("ActualHeight");
@@ -96,7 +98,16 @@ namespace QEnc
             ProgressBar.BarOpacity = 0;
             ProgressBar.Value = 0;
             ProgressBar.UpdateProgress(100);
-            ((Storyboard)Resources["ShowProgressBox"]).Begin();
+
+            ((Storyboard)Resources["ShowWindow"]).Completed += delegate
+            {
+                 Dispatcher.Invoke(new Action(() =>
+                 {
+                     ((Storyboard)Resources["ShowProgressBox"]).Begin();
+                 }));
+            };
+            ((Storyboard)Resources["ShowWindow"]).Begin();
+            
         }
 
         // About Header control
@@ -778,7 +789,15 @@ namespace QEnc
                 {
                     Dispatcher.Invoke(new Action(() =>
                     {
-                        this.Close();
+                        ((Storyboard)Resources["HideWindow"]).Completed += delegate
+                        {
+                            Dispatcher.Invoke(new Action(() =>
+                            {
+                                ProgressBar.Stop();
+                                this.Close();
+                            }));
+                        };
+                        ((Storyboard)Resources["HideWindow"]).Begin();
                     }));
                 };
                 e.Cancel = true;
@@ -861,7 +880,6 @@ namespace QEnc
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Console.WriteLine(value);
             return (double)value + 350;
         }
 
