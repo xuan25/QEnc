@@ -40,6 +40,7 @@ namespace QEnc
                 double i = 0;
                 Dispatcher.Invoke(new Action(() =>
                 {
+                    DropShadow.Opacity = 0.5;
                     i = DropShadow.ShadowDepth;
                 }));
                 while (i < 1)
@@ -54,7 +55,6 @@ namespace QEnc
                 }
                 Dispatcher.Invoke(new Action(() =>
                 {
-                    DropShadow.Opacity = 0.5;
                     DropShadow.ShadowDepth = 1;
                     DropShadow.BlurRadius = 16;
                 }));
