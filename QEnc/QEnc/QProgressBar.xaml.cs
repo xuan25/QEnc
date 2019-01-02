@@ -44,6 +44,25 @@ namespace QEnc
         {
             if(ActualWidth != 0 && ActualHeight != 0)
                 ShowProgress(Value);
+            if (Value <= 25 || Value >= 75)
+                OpacityBrush.AlignmentY = AlignmentY.Bottom;
+            else
+                OpacityBrush.AlignmentY = AlignmentY.Top;
+            if (Value >= 0 && Value <= 50)
+                OpacityBrush.AlignmentX = AlignmentX.Left;
+            else
+                OpacityBrush.AlignmentX = AlignmentX.Right;
+            if (Value > 75)
+            {
+                HeaderOrigin.Visibility = Visibility.Hidden;
+                PathR.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                HeaderOrigin.Visibility = Visibility.Visible;
+                PathR.Visibility = Visibility.Visible;
+            }
+                
         }
         DependencyPropertyDescriptor ValuePropertyDescriptor = DependencyPropertyDescriptor.FromProperty(ValueProperty, typeof(QProgressBar));
 

@@ -37,7 +37,7 @@
                 </MultiBinding>
             </Grid.Width>
             <Grid.OpacityMask>
-                <VisualBrush>
+                <VisualBrush x:Name="OpacityBrush" Stretch="Uniform" AlignmentY="Bottom" AlignmentX="Left">
                     <VisualBrush.Visual>
                         <Path Fill="Blue">
                             <Path.Data>
@@ -95,40 +95,7 @@
             </Ellipse>
             <!--Bar-->
             <Grid x:Name="Bar">
-                <!--main-->
-                <Path x:Name="PathR" Fill="DeepSkyBlue">
-                    <Path.Data>
-                        <PathGeometry>
-                            <PathFigure x:Name="StartR" IsClosed="True">
-                                <PathFigure.StartPoint>
-                                    <MultiBinding Converter="{StaticResource CenterPoint}">
-                                        <Binding ElementName="MainG" Path="ActualWidth"/>
-                                        <Binding ElementName="MainG" Path="ActualHeight"/>
-                                    </MultiBinding>
-                                </PathFigure.StartPoint>
-                                <LineSegment Point="{Binding ElementName=StartR, Path=StartPoint, Converter={StaticResource StartPointR}}"/>
-                                <ArcSegment x:Name="EndR" Size="{Binding ElementName=StartR, Path=StartPoint, Converter={StaticResource EndSizeR}}" Point="{Binding ElementName=StartR, Path=StartPoint, Converter={StaticResource EndPointR}}" SweepDirection="Clockwise"/>
-                            </PathFigure>
-                        </PathGeometry>
-                    </Path.Data>
-                </Path>
-                <Path x:Name="PathL" Fill="DeepSkyBlue">
-                    <Path.Data>
-                        <PathGeometry>
-                            <PathFigure x:Name="StartL" IsClosed="True">
-                                <PathFigure.StartPoint>
-                                    <MultiBinding Converter="{StaticResource CenterPoint}">
-                                        <Binding ElementName="MainG" Path="ActualWidth"/>
-                                        <Binding ElementName="MainG" Path="ActualHeight"/>
-                                    </MultiBinding>
-                                </PathFigure.StartPoint>
-                                <LineSegment Point="{Binding ElementName=StartL, Path=StartPoint, Converter={StaticResource StartPointL}}"/>
-                                <ArcSegment x:Name="EndL" Size="{Binding ElementName=StartL, Path=StartPoint, Converter={StaticResource EndSizeL}}" Point="{Binding ElementName=StartL, Path=StartPoint, Converter={StaticResource EndPointL}}" SweepDirection="Clockwise"/>
-                            </PathFigure>
-                        </PathGeometry>
-                    </Path.Data>
-                </Path>
-                <!--hender-->
+                <!--header1 Back-->
                 <Ellipse VerticalAlignment="Top" HorizontalAlignment="Left" Fill="{Binding ElementName=Header, Path=Fill}" Opacity="{Binding ElementName=Header, Path=Opacity}">
                     <Ellipse.Width>
                         <MultiBinding Converter="{StaticResource HeaderDiameter}">
@@ -152,7 +119,22 @@
                         </MultiBinding>
                     </Ellipse.Margin>
                 </Ellipse>
+                <!--Path R Back-->
+                <Path Fill="{Binding ElementName=PathR, Path=Fill}">
+                    <Path.Data>
+                        <PathGeometry>
+                            <PathFigure x:Name="StartRBack" IsClosed="True" StartPoint="{Binding ElementName=StartR, Path=StartPoint}">
+                                <LineSegment Point="{Binding ElementName=StartR, Path=StartPoint, Converter={StaticResource StartPointR}}"/>
+                                <ArcSegment Size="{Binding ElementName=EndR, Path=Size}" Point="{Binding ElementName=EndR, Path=Point}" SweepDirection="Clockwise"/>
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>
+                <!--header2-->
                 <Ellipse x:Name="Header" VerticalAlignment="Top" HorizontalAlignment="Left" Fill="DeepSkyBlue">
+                    <Ellipse.Effect>
+                        <DropShadowEffect x:Name="DropShadow" ShadowDepth="1" BlurRadius="16" Direction="270" Opacity="0.5" Color="#FF211613"/>
+                    </Ellipse.Effect>
                     <Ellipse.Width>
                         <MultiBinding Converter="{StaticResource HeaderDiameter}">
                             <Binding ElementName="MainG" Path="ActualWidth"/>
@@ -175,6 +157,65 @@
                         </MultiBinding>
                     </Ellipse.Margin>
                 </Ellipse>
+                <!--header1-->
+                <Ellipse x:Name="HeaderOrigin" VerticalAlignment="Top" HorizontalAlignment="Left" Fill="{Binding ElementName=Header, Path=Fill}" Opacity="{Binding ElementName=Header, Path=Opacity}">
+                    <Ellipse.Width>
+                        <MultiBinding Converter="{StaticResource HeaderDiameter}">
+                            <Binding ElementName="MainG" Path="ActualWidth"/>
+                            <Binding ElementName="MainG" Path="ActualHeight"/>
+                            <Binding ElementName="MaskInner" Path="RadiusX"/>
+                        </MultiBinding>
+                    </Ellipse.Width>
+                    <Ellipse.Height>
+                        <MultiBinding Converter="{StaticResource HeaderDiameter}">
+                            <Binding ElementName="MainG" Path="ActualWidth"/>
+                            <Binding ElementName="MainG" Path="ActualHeight"/>
+                            <Binding ElementName="MaskInner" Path="RadiusX"/>
+                        </MultiBinding>
+                    </Ellipse.Height>
+                    <Ellipse.Margin>
+                        <MultiBinding Converter="{StaticResource HeaderMargin}">
+                            <Binding ElementName="MainG" Path="ActualWidth"/>
+                            <Binding ElementName="MainG" Path="ActualHeight"/>
+                            <Binding ElementName="MaskInner" Path="RadiusX"/>
+                        </MultiBinding>
+                    </Ellipse.Margin>
+                </Ellipse>
+                <!--Path L-->
+                <Path x:Name="PathL" Fill="DeepSkyBlue">
+                    <Path.Data>
+                        <PathGeometry>
+                            <PathFigure x:Name="StartL" IsClosed="True">
+                                <PathFigure.StartPoint>
+                                    <MultiBinding Converter="{StaticResource CenterPoint}">
+                                        <Binding ElementName="MainG" Path="ActualWidth"/>
+                                        <Binding ElementName="MainG" Path="ActualHeight"/>
+                                    </MultiBinding>
+                                </PathFigure.StartPoint>
+                                <LineSegment Point="{Binding ElementName=StartL, Path=StartPoint, Converter={StaticResource StartPointL}}"/>
+                                <ArcSegment x:Name="EndL" Size="{Binding ElementName=StartL, Path=StartPoint, Converter={StaticResource EndSizeL}}" Point="{Binding ElementName=StartL, Path=StartPoint, Converter={StaticResource EndPointL}}" SweepDirection="Clockwise"/>
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>
+                <!--Path R-->
+                <Path x:Name="PathR" Fill="DeepSkyBlue">
+                    <Path.Data>
+                        <PathGeometry>
+                            <PathFigure x:Name="StartR" IsClosed="True">
+                                <PathFigure.StartPoint>
+                                    <MultiBinding Converter="{StaticResource CenterPoint}">
+                                        <Binding ElementName="MainG" Path="ActualWidth"/>
+                                        <Binding ElementName="MainG" Path="ActualHeight"/>
+                                    </MultiBinding>
+                                </PathFigure.StartPoint>
+                                <LineSegment Point="{Binding ElementName=StartR, Path=StartPoint, Converter={StaticResource StartPointR}}"/>
+                                <ArcSegment x:Name="EndR" Size="{Binding ElementName=StartR, Path=StartPoint, Converter={StaticResource EndSizeR}}" Point="{Binding ElementName=StartR, Path=StartPoint, Converter={StaticResource EndPointR}}" SweepDirection="Clockwise"/>
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>
+                
             </Grid>
         </Grid>
     </Grid>
