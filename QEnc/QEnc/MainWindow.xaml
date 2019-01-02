@@ -312,7 +312,7 @@
                         <local:StateNote x:Name="VideoNote" HorizontalAlignment="Left" Height="30" Margin="100,0,0,0" VerticalAlignment="Center" Width="30" MouseLeftButtonDown="Note_MouseLeftButtonDown" MouseRightButtonDown="Note_MouseRightButtonDown"/>
                         <local:QTextBox x:Name="VideoBitrateBox" InnerBrush="#fbfbfb" Height="30" Width="100" Margin="5,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Text="" Grid.Row="1" DataObject.Pasting="NumberBox_Pasting" PreviewKeyDown="NumberBox_PreviewKeyDown" PreviewTextInput="NumberBox_PreviewTextInput"/>
                         <local:QTextBox x:Name="VideoCRFBox" InnerBrush="#fbfbfb" Height="30" Width="100" Margin="5,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Text="" Grid.Row="1" DataObject.Pasting="NumberBox_Pasting" PreviewKeyDown="NumberBox_PreviewKeyDown" PreviewTextInput="NumberBox_PreviewTextInput"/>
-                        <TextBlock x:Name="VideoUnitBox" Margin="110,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Text="kbps" Grid.Row="1"/>
+                        <TextBlock x:Name="VideoUnitBox" Margin="110,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Text="{StaticResource kbps}" Grid.Row="1"/>
                         <local:QRadioBox x:Name="VideoModeBox" InnerBrush="#fbfbfb" Height="30" Width="250" Grid.Row="1" HorizontalAlignment="Left" FontSize="17" Margin="150,2,0,3" SelectionChanged="VideoModeBox_SelectionChanged"/>
                         <local:QTextBox x:Name="VideoParamBox" InnerBrush="#fbfbfb" Height="30" Margin="5,0" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="17" Text="" Grid.Row="2"/>
                     </Grid>
@@ -346,7 +346,7 @@
                         <TextBlock Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Text="{StaticResource Audio}" Grid.Row="0"/>
                         <local:StateNote x:Name="AudioNote" HorizontalAlignment="Left" Height="30" Margin="100,0,0,0" VerticalAlignment="Center" Width="30" MouseLeftButtonDown="Note_MouseLeftButtonDown" MouseRightButtonDown="Note_MouseRightButtonDown"/>
                         <local:QTextBox x:Name="AudioBitrateBox" InnerBrush="#fbfbfb" Height="30" Width="100" Margin="5, 0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Text="" Grid.Row="1" DataObject.Pasting="NumberBox_Pasting" PreviewKeyDown="NumberBox_PreviewKeyDown" PreviewTextInput="NumberBox_PreviewTextInput"/>
-                        <TextBlock Margin="110,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Text="kbps" Grid.Row="1"/>
+                        <TextBlock Margin="110,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Text="{StaticResource kbps}" Grid.Row="1"/>
                         <local:QTextBox x:Name="AudioParamBox" InnerBrush="#fbfbfb" Height="30" Margin="5,0" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="17" Text="" Grid.Row="2"/>
                     </Grid>
                 </Grid>
