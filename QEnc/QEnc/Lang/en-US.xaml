@@ -10,6 +10,7 @@
     <sys:String x:Key="B1Pass">1-Pass</sys:String>
     <sys:String x:Key="B2Pass">2-Pass</sys:String>
     <sys:String x:Key="B3Pass">3-Pass</sys:String>
+    <sys:String x:Key="Auto">Auto</sys:String>
     <sys:String x:Key="crf">crf</sys:String>
     <sys:String x:Key="kbps">kbps</sys:String>
     <sys:String x:Key="Config">Config</sys:String>

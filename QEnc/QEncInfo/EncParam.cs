@@ -10,7 +10,7 @@ namespace QEncInfo
     public class EncParam
     {
         public string VideoPath;
-        public enum VideoModes { CRF, B1PASS, B2PASS, B3PASS }
+        public enum VideoModes { CRF, B1PASS, B2PASS, B3PASS, AUTO }
         public VideoModes VideoMode;
         public double VideoCRF;
         public int VideoBitrate;
@@ -25,22 +25,11 @@ namespace QEncInfo
 
         }
 
-        public EncParam(string videoPath, double videoCRF, string videoParam, string audioPath, int audioBitrate, string audioParam, string subtitlePath)
-        {
-            VideoPath = videoPath;
-            VideoMode = VideoModes.CRF;
-            VideoCRF = videoCRF;
-            VideoParam = videoParam;
-            AudioPath = audioPath;
-            AudioBitrate = audioBitrate;
-            AudioParam = audioParam;
-            SubtitlePath = subtitlePath;
-        }
-
-        public EncParam(string videoPath, VideoModes videoMode, int videoBitrate, string videoParam, string audioPath, int audioBitrate, string audioParam, string subtitlePath)
+        public EncParam(string videoPath, VideoModes videoMode, double videoCRF, int videoBitrate, string videoParam, string audioPath, int audioBitrate, string audioParam, string subtitlePath)
         {
             VideoPath = videoPath;
             VideoMode = videoMode;
+            VideoCRF = videoCRF;
             VideoBitrate = videoBitrate;
             VideoParam = videoParam;
             AudioPath = audioPath;
@@ -54,16 +43,10 @@ namespace QEncInfo
             VideoPath = videoPath;
         }
 
-        public void SetVideoConfig(double videoCRF, string videoParam)
-        {
-            VideoMode = VideoModes.CRF;
-            VideoCRF = videoCRF;
-            VideoParam = videoParam;
-        }
-
-        public void SetVideoConfig(VideoModes videoMode, int videoBitrate, string videoParam)
+        public void SetVideoConfig(VideoModes videoMode, double videoCRF, int videoBitrate, string videoParam)
         {
             VideoMode = videoMode;
+            VideoCRF = videoCRF;
             VideoBitrate = videoBitrate;
             VideoParam = videoParam;
         }

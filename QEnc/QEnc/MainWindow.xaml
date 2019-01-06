@@ -290,8 +290,8 @@
             <!--Config Grid-->
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="3*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <!--Video Config-->
@@ -319,14 +319,16 @@
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="35"/>
                             <RowDefinition Height="35"/>
+                            <RowDefinition Height="35"/>
                         </Grid.RowDefinitions>
                         <TextBlock Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Text="{StaticResource Video}" Grid.Row="0"/>
                         <local:StateNote x:Name="VideoNote" HorizontalAlignment="Left" Height="30" Margin="100,0,0,0" VerticalAlignment="Center" Width="30" MouseLeftButtonDown="Note_MouseLeftButtonDown" MouseRightButtonDown="Note_MouseRightButtonDown"/>
-                        <local:QTextBox x:Name="VideoBitrateBox" InnerBrush="#fbfbfb" Height="30" Width="100" Margin="5,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Text="" Grid.Row="1" DataObject.Pasting="NumberBox_Pasting" PreviewKeyDown="NumberBox_PreviewKeyDown" PreviewTextInput="NumberBox_PreviewTextInput"/>
-                        <local:QTextBox x:Name="VideoCRFBox" InnerBrush="#fbfbfb" Height="30" Width="100" Margin="5,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Text="" Grid.Row="1" DataObject.Pasting="NumberBox_Pasting" PreviewKeyDown="NumberBox_PreviewKeyDown" PreviewTextInput="NumberBox_PreviewTextInput"/>
-                        <TextBlock x:Name="VideoUnitBox" Margin="110,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Text="{StaticResource kbps}" Grid.Row="1"/>
-                        <local:QRadioBox x:Name="VideoModeBox" InnerBrush="#fbfbfb" Height="30" Width="250" Grid.Row="1" HorizontalAlignment="Left" FontSize="17" Margin="150,2,0,3" SelectionChanged="VideoModeBox_SelectionChanged"/>
-                        <local:QTextBox x:Name="VideoParamBox" InnerBrush="#fbfbfb" Height="30" Margin="5,0" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="17" Text="" Grid.Row="2"/>
+                        <local:QRadioBox x:Name="VideoModeBox" InnerBrush="#fbfbfb" Height="30" Width="395" Grid.Row="1" HorizontalAlignment="Left" FontSize="17" Margin="5,0,0,0" SelectionChanged="VideoModeBox_SelectionChanged"/>
+                        <local:QTextBox x:Name="VideoCRFBox" InnerBrush="#fbfbfb" Height="30" Width="100" Margin="5,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Text="" Grid.Row="2" DataObject.Pasting="NumberBox_Pasting" PreviewKeyDown="NumberBox_PreviewKeyDown" PreviewTextInput="NumberBox_PreviewTextInput"/>
+                        <TextBlock Margin="110,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Text="{StaticResource crf}" Grid.Row="2"/>
+                        <local:QTextBox x:Name="VideoBitrateBox" InnerBrush="#fbfbfb" Height="30" Width="100" Margin="205,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Text="" Grid.Row="2" DataObject.Pasting="NumberBox_Pasting" PreviewKeyDown="NumberBox_PreviewKeyDown" PreviewTextInput="NumberBox_PreviewTextInput"/>
+                        <TextBlock Margin="310,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Text="{StaticResource kbps}" Grid.Row="2"/>
+                        <local:QTextBox x:Name="VideoParamBox" InnerBrush="#fbfbfb" Height="30" Margin="5,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="17" Text="" Grid.Row="3"/>
                     </Grid>
                 </Grid>
                 <!--Audio Config-->

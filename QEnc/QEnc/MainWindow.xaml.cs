@@ -64,6 +64,8 @@ namespace QEnc
             VideoModeBox.AddSelection(Application.Current.FindResource("B1Pass").ToString());
             VideoModeBox.AddSelection(Application.Current.FindResource("B2Pass").ToString());
             VideoModeBox.AddSelection(Application.Current.FindResource("B3Pass").ToString());
+            VideoModeBox.AddSelection(Application.Current.FindResource("Auto").ToString());
+
 
             StartBox.AddSelection(Application.Current.FindResource("Config").ToString());
             StartBox.AddSelection(Application.Current.FindResource("Start").ToString());
@@ -82,7 +84,6 @@ namespace QEnc
 
             VideoBitrateBox.Text = "10000";
             VideoCRFBox.Text = "23.0";
-            VideoUnitBox.Text = Application.Current.FindResource("crf").ToString();
             AudioBitrateBox.Text = "192";
 
             encParam = new EncParam();
@@ -193,18 +194,14 @@ namespace QEnc
 
         private void VideoModeBox_SelectionChanged(object sender, int index, string value)
         {
-            if(value == Application.Current.FindResource("VCRF").ToString() && VideoUnitBox.Text != Application.Current.FindResource("crf").ToString())
-            {
-                VideoCRFBox.Visibility = Visibility.Visible;
-                VideoBitrateBox.Visibility = Visibility.Hidden;
-                VideoUnitBox.Text = Application.Current.FindResource("crf").ToString();
-            }
-            else if(value != Application.Current.FindResource("VCRF").ToString() && VideoUnitBox.Text != Application.Current.FindResource("kbps").ToString())
-            {
-                VideoCRFBox.Visibility = Visibility.Hidden;
-                VideoBitrateBox.Visibility = Visibility.Visible;
-                VideoUnitBox.Text = Application.Current.FindResource("kbps").ToString();
-            }
+            if(index == 0 || index == 4)
+                VideoCRFBox.IsEnabled = true;
+            else
+                VideoCRFBox.IsEnabled = false;
+            if(index != 0)
+                VideoBitrateBox.IsEnabled = true;
+            else
+                VideoBitrateBox.IsEnabled = false;
         }
 
         // About file import and checking
@@ -434,14 +431,24 @@ namespace QEnc
             ProgressBar.UpdateProgress(-1);
             ProgressBar.ProgressChanged += ProgressBar_ProgressChanged;
 
-            if (VideoModeBox.SelectedIndex == 0)
-                encParam.SetVideoConfig(double.Parse(VideoCRFBox.Text), VideoParamBox.Text);
-            else if(VideoModeBox.SelectedIndex == 1)
-                encParam.SetVideoConfig(EncParam.VideoModes.B1PASS, int.Parse(VideoBitrateBox.Text), VideoParamBox.Text);
-            else if (VideoModeBox.SelectedIndex == 2)
-                encParam.SetVideoConfig(EncParam.VideoModes.B2PASS, int.Parse(VideoBitrateBox.Text), VideoParamBox.Text);
-            else if (VideoModeBox.SelectedIndex == 3)
-                encParam.SetVideoConfig(EncParam.VideoModes.B3PASS, int.Parse(VideoBitrateBox.Text), VideoParamBox.Text);
+            switch (VideoModeBox.SelectedIndex)
+            {
+                case 0:
+                    encParam.SetVideoConfig(EncParam.VideoModes.CRF, double.Parse(VideoCRFBox.Text), int.Parse(VideoBitrateBox.Text), VideoParamBox.Text);
+                    break;
+                case 1:
+                    encParam.SetVideoConfig(EncParam.VideoModes.B1PASS, double.Parse(VideoCRFBox.Text), int.Parse(VideoBitrateBox.Text), VideoParamBox.Text);
+                    break;
+                case 2:
+                    encParam.SetVideoConfig(EncParam.VideoModes.B2PASS, double.Parse(VideoCRFBox.Text), int.Parse(VideoBitrateBox.Text), VideoParamBox.Text);
+                    break;
+                case 3:
+                    encParam.SetVideoConfig(EncParam.VideoModes.B3PASS, double.Parse(VideoCRFBox.Text), int.Parse(VideoBitrateBox.Text), VideoParamBox.Text);
+                    break;
+                case 4:
+                    encParam.SetVideoConfig(EncParam.VideoModes.AUTO, double.Parse(VideoCRFBox.Text), int.Parse(VideoBitrateBox.Text), VideoParamBox.Text);
+                    break;
+            }
             encParam.SetAudioConfig(int.Parse(AudioBitrateBox.Text), AudioParamBox.Text);
 
             enc = new Enc(encParam);
@@ -570,8 +577,8 @@ namespace QEnc
         {
             public StateNote.States VideoState, AudioState, SubtitleState;
             public int VideoMode;
-            public string VideoPath, VideoCRF, VideoBitrate, VideoUnit, VideoParam, AudioPath, AudioBitrate, AudioParam, SubtitlePath;
-            public Visibility CRFVisibiliy, BitrateVisibility;
+            public string VideoPath, VideoCRF, VideoBitrate, VideoParam, AudioPath, AudioBitrate, AudioParam, SubtitlePath;
+            public bool CRFIsEnabled, BitrateIsEnabled;
         }
 
         private ConfigTag GetConfigTag()
@@ -585,14 +592,13 @@ namespace QEnc
                 VideoPath = encParam.VideoPath,
                 VideoCRF = VideoCRFBox.Text,
                 VideoBitrate = VideoBitrateBox.Text,
-                VideoUnit = VideoUnitBox.Text,
                 VideoParam = VideoParamBox.Text,
                 AudioPath = encParam.AudioPath,
                 AudioBitrate = AudioBitrateBox.Text,
                 AudioParam = AudioParamBox.Text,
                 SubtitlePath = encParam.SubtitlePath,
-                CRFVisibiliy = VideoCRFBox.Visibility,
-                BitrateVisibility = VideoBitrateBox.Visibility
+                CRFIsEnabled = VideoCRFBox.IsEnabled,
+                BitrateIsEnabled = VideoBitrateBox.IsEnabled
             };
             return tag;
         }
@@ -606,14 +612,13 @@ namespace QEnc
             encParam.VideoPath = tag.VideoPath;
             VideoCRFBox.Text = tag.VideoCRF;
             VideoBitrateBox.Text = tag.VideoBitrate;
-            VideoUnitBox.Text = tag.VideoUnit;
             VideoParamBox.Text = tag.VideoParam;
             encParam.AudioPath = tag.AudioPath;
             AudioBitrateBox.Text = tag.AudioBitrate;
             AudioParamBox.Text = tag.AudioParam;
             encParam.SubtitlePath = tag.SubtitlePath;
-            VideoCRFBox.Visibility = tag.CRFVisibiliy;
-            VideoBitrateBox.Visibility = tag.BitrateVisibility;
+            VideoCRFBox.IsEnabled = tag.CRFIsEnabled;
+            VideoBitrateBox.IsEnabled = tag.BitrateIsEnabled;
         }
 
         private void AddToQueue()
@@ -691,14 +696,24 @@ namespace QEnc
                         encParam.AudioPath = tag.AudioPath;
                         encParam.SubtitlePath = tag.SubtitlePath;
 
-                        if (tag.VideoMode == 0)
-                            encParam.SetVideoConfig(double.Parse(tag.VideoCRF), tag.VideoParam);
-                        else if (tag.VideoMode == 1)
-                            encParam.SetVideoConfig(EncParam.VideoModes.B1PASS, int.Parse(tag.VideoBitrate), tag.VideoParam);
-                        else if (tag.VideoMode == 2)
-                            encParam.SetVideoConfig(EncParam.VideoModes.B2PASS, int.Parse(tag.VideoBitrate), tag.VideoParam);
-                        else if (tag.VideoMode == 3)
-                            encParam.SetVideoConfig(EncParam.VideoModes.B3PASS, int.Parse(tag.VideoBitrate), tag.VideoParam);
+                        switch (tag.VideoMode)
+                        {
+                            case 0:
+                                encParam.SetVideoConfig(EncParam.VideoModes.CRF, double.Parse(tag.VideoCRF), int.Parse(tag.VideoBitrate), tag.VideoParam);
+                                break;
+                            case 1:
+                                encParam.SetVideoConfig(EncParam.VideoModes.B1PASS, double.Parse(tag.VideoCRF), int.Parse(tag.VideoBitrate), tag.VideoParam);
+                                break;
+                            case 2:
+                                encParam.SetVideoConfig(EncParam.VideoModes.B2PASS, double.Parse(tag.VideoCRF), int.Parse(tag.VideoBitrate), tag.VideoParam);
+                                break;
+                            case 3:
+                                encParam.SetVideoConfig(EncParam.VideoModes.B3PASS, double.Parse(tag.VideoCRF), int.Parse(tag.VideoBitrate), tag.VideoParam);
+                                break;
+                            case 4:
+                                encParam.SetVideoConfig(EncParam.VideoModes.AUTO, double.Parse(tag.VideoCRF), int.Parse(tag.VideoBitrate), tag.VideoParam);
+                                break;
+                        }
                         encParam.SetAudioConfig(int.Parse(tag.AudioBitrate), tag.AudioParam);
 
                         enc = new Enc(encParam);
