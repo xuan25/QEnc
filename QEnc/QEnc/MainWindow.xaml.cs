@@ -60,22 +60,6 @@ namespace QEnc
             minWidthBinding.Converter = new MinWidthConverter();
             this.SetBinding(Window.MinWidthProperty, minWidthBinding);
 
-            VideoModeBox.AddSelection(Application.Current.FindResource("VCRF").ToString());
-            VideoModeBox.AddSelection(Application.Current.FindResource("B1Pass").ToString());
-            VideoModeBox.AddSelection(Application.Current.FindResource("B2Pass").ToString());
-            VideoModeBox.AddSelection(Application.Current.FindResource("B3Pass").ToString());
-            VideoModeBox.AddSelection(Application.Current.FindResource("Auto").ToString());
-
-
-            StartBox.AddSelection(Application.Current.FindResource("Config").ToString());
-            StartBox.AddSelection(Application.Current.FindResource("Start").ToString());
-
-            ProcessModeBox.AddSelection(Application.Current.FindResource("Single").ToString());
-            ProcessModeBox.AddSelection(Application.Current.FindResource("Multi").ToString());
-
-            JoinQueueBox.AddSelection(Application.Current.FindResource("Not_Queue").ToString());
-            JoinQueueBox.AddSelection(Application.Current.FindResource("Queue").ToString());
-
             QueueList.Items.Add(new ListBoxItem() { Content = Application.Current.FindResource("New_Queue_Item").ToString() });
             QueueList.SelectedIndex = 0;
 
@@ -87,7 +71,6 @@ namespace QEnc
             AudioBitrateBox.Text = "192";
 
             encParam = new EncParam();
-            LoadConfig();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -95,6 +78,8 @@ namespace QEnc
             IntPtr windowHandle = new WindowInteropHelper(this).Handle;
             int style = GetWindowLong(windowHandle, GWL_STYLE);
             SetWindowLong(windowHandle, GWL_STYLE, (style | WS_CAPTION));
+
+            LoadConfig();
 
             ProgressBar.BarOpacity = 0;
             ProgressBar.Value = 0;

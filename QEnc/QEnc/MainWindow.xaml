@@ -282,7 +282,12 @@
                         </Grid.RowDefinitions>
                         <Border BorderThickness="0,0,1,0" Grid.RowSpan="2" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
                         <ListBox x:Name="QueueList" FontSize="18" Width="{Binding ElementName=ProcessGrid, Path=ActualWidth}" HorizontalAlignment="Right" SelectionMode="Single" SelectionChanged="QueueList_SelectionChanged" Background="#fbfbfb"/>
-                        <local:QRadioBox x:Name="JoinQueueBox" InnerBrush="#fbfbfb" Height="30" Width="250" Grid.Row="1" HorizontalAlignment="Right" FontSize="17" Margin="0,0,15,0" SelectionChanged="JoinQueueBox_SelectionChanged"/>
+                        <local:QRadioBox x:Name="JoinQueueBox" InnerBrush="#fbfbfb" Height="30" Width="250" Grid.Row="1" HorizontalAlignment="Right" FontSize="17" Margin="0,0,15,0" SelectionChanged="JoinQueueBox_SelectionChanged">
+                            <local:QRadioBox.Items>
+                                <local:QRadioBoxItem Value="{StaticResource Not_Queue}"/>
+                                <local:QRadioBoxItem Value="{StaticResource Queue}"/>
+                            </local:QRadioBox.Items>
+                        </local:QRadioBox>
                     </Grid>
                 </Grid>
                 
@@ -323,7 +328,15 @@
                         </Grid.RowDefinitions>
                         <TextBlock Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Text="{StaticResource Video}" Grid.Row="0"/>
                         <local:StateNote x:Name="VideoNote" HorizontalAlignment="Left" Height="30" Margin="100,0,0,0" VerticalAlignment="Center" Width="30" MouseLeftButtonDown="Note_MouseLeftButtonDown" MouseRightButtonDown="Note_MouseRightButtonDown"/>
-                        <local:QRadioBox x:Name="VideoModeBox" InnerBrush="#fbfbfb" Height="30" Width="395" Grid.Row="1" HorizontalAlignment="Left" FontSize="17" Margin="5,0,0,0" SelectionChanged="VideoModeBox_SelectionChanged"/>
+                        <local:QRadioBox x:Name="VideoModeBox" InnerBrush="#fbfbfb" Height="30" Width="395" Grid.Row="1" HorizontalAlignment="Left" FontSize="17" Margin="5,0,0,0" SelectionChanged="VideoModeBox_SelectionChanged">
+                            <local:QRadioBox.Items>
+                                <local:QRadioBoxItem Value="{StaticResource crf}"/>
+                                <local:QRadioBoxItem Value="{StaticResource B1Pass}"/>
+                                <local:QRadioBoxItem Value="{StaticResource B2Pass}"/>
+                                <local:QRadioBoxItem Value="{StaticResource B3Pass}"/>
+                                <local:QRadioBoxItem Value="{StaticResource Auto}"/>
+                            </local:QRadioBox.Items>
+                        </local:QRadioBox>
                         <local:QTextBox x:Name="VideoCRFBox" InnerBrush="#fbfbfb" Height="30" Width="100" Margin="5,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Text="" Grid.Row="2" DataObject.Pasting="NumberBox_Pasting" PreviewKeyDown="NumberBox_PreviewKeyDown" PreviewTextInput="NumberBox_PreviewTextInput"/>
                         <TextBlock Margin="110,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Text="{StaticResource crf}" Grid.Row="2"/>
                         <local:QTextBox x:Name="VideoBitrateBox" InnerBrush="#fbfbfb" Height="30" Width="100" Margin="205,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="17" Text="" Grid.Row="2" DataObject.Pasting="NumberBox_Pasting" PreviewKeyDown="NumberBox_PreviewKeyDown" PreviewTextInput="NumberBox_PreviewTextInput"/>
@@ -399,8 +412,18 @@
         </Grid>
         <!--Status Grid-->
         <Grid Grid.Row="2" Background="#f4f4f4" Grid.ColumnSpan="2">
-            <local:QRadioBox x:Name="ProcessModeBox" InnerBrush="#fbfbfb" Height="30" Width="250" Grid.Row="1" HorizontalAlignment="Left" FontSize="17" Margin="15,0,0,0" SelectionChanged="ProcessModeBox_SelectionChanged"/>
-            <local:QRadioBox x:Name="StartBox" InnerBrush="#fbfbfb" Height="30" Width="250" Grid.Row="1" HorizontalAlignment="Right" FontSize="17" Margin="0,0,15,0" SelectionChanged="StartBox_SelectionChanged"/>
+            <local:QRadioBox x:Name="ProcessModeBox" InnerBrush="#fbfbfb" Height="30" Width="250" Grid.Row="1" HorizontalAlignment="Left" FontSize="17" Margin="15,0,0,0" SelectionChanged="ProcessModeBox_SelectionChanged">
+                <local:QRadioBox.Items>
+                    <local:QRadioBoxItem Value="{StaticResource Single}"/>
+                    <local:QRadioBoxItem Value="{StaticResource Multi}"/>
+                </local:QRadioBox.Items>
+            </local:QRadioBox>
+            <local:QRadioBox x:Name="StartBox" InnerBrush="#fbfbfb" Height="30" Width="250" Grid.Row="1" HorizontalAlignment="Right" FontSize="17" Margin="0,0,15,0" SelectionChanged="StartBox_SelectionChanged">
+                <local:QRadioBox.Items>
+                    <local:QRadioBoxItem Value="{StaticResource Config}"/>
+                    <local:QRadioBoxItem Value="{StaticResource Start}"/>
+                </local:QRadioBox.Items>
+            </local:QRadioBox>
         </Grid>
     </Grid>
 </Window>

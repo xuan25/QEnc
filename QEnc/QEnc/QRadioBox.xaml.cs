@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -26,12 +28,12 @@ namespace QEnc
         public event DelSelectionChanged SelectionChanged;
         public event DelSelectionChanged PreviewSelectionChanged;
 
-        public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(List<QRadioBoxItem>), typeof(QRadioBox), new FrameworkPropertyMetadata(new List<QRadioBoxItem>()));
-        public List<QRadioBoxItem> Items
+        public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(ObservableCollection<QRadioBoxItem>), typeof(QRadioBox), new FrameworkPropertyMetadata(new ObservableCollection<QRadioBoxItem>()));
+        public ObservableCollection<QRadioBoxItem> Items
         {
             get
             {
-                return (List<QRadioBoxItem>)GetValue(ItemsProperty);
+                return (ObservableCollection<QRadioBoxItem>)GetValue(ItemsProperty);
             }
             set
             {
@@ -40,13 +42,23 @@ namespace QEnc
         }
         private void ItemsChanged(object sender, EventArgs e)
         {
-            int count = 0;
+            if (Items != null)
+                Items_CollectionChanged(null, null);
+        }
+        private void Items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
             RadioBox.ColumnDefinitions.Clear();
-            foreach (QRadioBoxItem i in Items)
+            RadioBox.Children.Clear();
+            for(int i = 0; i < Items.Count; i++)
             {
+                if(Items[i].Parent != null)
+                    ((Grid)(Items[i].Parent)).Children.Clear();
+                Items[i].Selected -= RadioButtonItem_Selected;
+                Items[i].Selected += RadioButtonItem_Selected;
+                RadioBox.Children.Add(Items[i]);
+
                 RadioBox.ColumnDefinitions.Add(new ColumnDefinition());
-                Grid.SetColumn(i, count);
-                count++;
+                Grid.SetColumn(Items[i], i);
             }
             if (RadioBox.ActualWidth > 2 && RadioBox.ActualHeight > 2)
                 SelectAnimation(SelectedIndex);
@@ -67,8 +79,11 @@ namespace QEnc
         }
         private void SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (SelectedIndex >= Items.Count)
+                SelectedIndex = Items.Count - 1;
             if (RadioBox.ActualWidth > 2 && RadioBox.ActualHeight > 2)
                 SelectAnimation(SelectedIndex);
+
         }
         DependencyPropertyDescriptor SelectedIndexPropertyDescriptor = DependencyPropertyDescriptor.FromProperty(SelectedIndexProperty, typeof(QRadioBox));
 
@@ -111,7 +126,10 @@ namespace QEnc
         public QRadioBox()
         {
             InitializeComponent();
-            Items = new List<QRadioBoxItem>();
+
+            Items = new ObservableCollection<QRadioBoxItem>();
+            Items.CollectionChanged += new NotifyCollectionChangedEventHandler(Items_CollectionChanged);
+
             ItemsPropertyDescriptor.AddValueChanged(this, ItemsChanged);
             SelectedIndexPropertyDescriptor.AddValueChanged(this, SelectedIndexChanged);
             SelectedBrushPropertyDescriptor.AddValueChanged(this, SelectedBrushChanged);
@@ -145,7 +163,8 @@ namespace QEnc
                 }
                 Dispatcher.Invoke(new Action(() =>
                 {
-                    SelectionChanged?.Invoke(this, to, Items[to].Value);
+                    if(Items.Count !=0)
+                        SelectionChanged?.Invoke(this, to, Items[to].Value);
                 }));
             });
             selectAnimationThread.Start();
@@ -153,12 +172,11 @@ namespace QEnc
 
         public void AddSelection(string value)
         {
-            QRadioBoxItem item = new QRadioBoxItem();
-            item.Value = value;
-            item.Selected += RadioButtonItem_Selected;
+            QRadioBoxItem item = new QRadioBoxItem
+            {
+                Value = value
+            };
             Items.Add(item);
-            RadioBox.Children.Add(item);
-            ItemsChanged(null, null);
         }
 
         private void RadioButtonItem_Selected(int index)
