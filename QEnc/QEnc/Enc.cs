@@ -30,10 +30,20 @@ namespace QEnc
 
         public Time(int hour, int minute, int second, int millisecond)
         {
-            Hour = hour;
-            Minute = minute;
-            Second = second;
-            Millisecond = millisecond;
+            if (hour < 0)
+            {
+                Hour = 0;
+                Minute = 0;
+                Second = 0;
+                Millisecond = 0;
+            }
+            else
+            {
+                Hour = hour;
+                Minute = minute;
+                Second = second;
+                Millisecond = millisecond;
+            }
         }
 
         public double ToSeconds()
@@ -44,7 +54,7 @@ namespace QEnc
         //00:00:00.000
         public static Time ConvertFromString(string str)
         {
-            Match match = Regex.Match(str, "(?<Hour>[0-9]{2}):(?<Minute>[0-9]{2}):(?<Second>[0-9]{2})\\.(?<Millisecond>[0-9]{0,3})");
+            Match match = Regex.Match(str, "(?<Hour>-?[0-9]{2,}):(?<Minute>[0-9]{2}):(?<Second>[0-9]{2})\\.(?<Millisecond>[0-9]{0,3})");
             return new Time(int.Parse(match.Groups["Hour"].Value), int.Parse(match.Groups["Minute"].Value), int.Parse(match.Groups["Second"].Value), (int)(double.Parse("0." + match.Groups["Millisecond"].Value) * 1000));
         }
     }
@@ -89,7 +99,7 @@ namespace QEnc
             process.StandardInput.WriteLine(cmd + " & exit");
             string result = process.StandardError.ReadToEnd();
             return Regex.Matches(result, 
-                "(Stream #(?<FileNum>[0-9]+):(?<TrackNum>[0-9]+)(\\((?<TrackName>.+)\\))?: (?<Type>Video): )|" +
+                "(Stream #(?<FileNum>[0-9]+):(?<TrackNum>[0-9]+)(\\((?<TrackName>.+)\\))?: (?<Type>Video): .*?(?<Width>[0-9]+)x(?<Height>[0-9]+), .*?(?<Bitrate>[0-9]+) kb/s, .*?(?<FPS>[0-9]+) fps)|" +
                 "(Stream #(?<FileNum>[0-9]+):(?<TrackNum>[0-9]+)(\\((?<TrackName>.+)\\))?: (?<Type>Audio): )|" +
                 "(Stream #(?<FileNum>[0-9]+):(?<TrackNum>[0-9]+)(\\((?<TrackName>.+)\\))?: (?<Type>Subtitle): )");
         }
@@ -104,6 +114,18 @@ namespace QEnc
                     return true;
             }
             return false;
+        }
+
+        public int CheckVideoBitrate(string path)
+        {
+            string ffmpegPath = Path.GetTempPath() + "QEnc\\bin\\ffmpeg.exe";
+            MatchCollection info = GetFileInfo("\"" + ffmpegPath + "\" -i \"" + path + "\"");
+            foreach (Match match in info)
+            {
+                if (match.Groups["Type"].Value == "Video")
+                    return int.Parse(match.Groups["Bitrate"].Value);
+            }
+            return 0;
         }
 
         public static bool IsAudioAvailable(string path)
@@ -132,8 +154,10 @@ namespace QEnc
 
         private string workingDirectory;
         private EncLog encLog;
+        private EncNote encNote;
         public void Start(EncNote encNote, bool waitForExit)
         {
+            this.encNote = encNote;
             encLog = new EncLog(encNote, encParam);
             string ffmpegPath = Path.GetTempPath() + "QEnc\\bin\\ffmpeg.exe";
 
@@ -175,6 +199,17 @@ namespace QEnc
                     {
                         cmdList.Add("\"" + ffmpegPath + "\" -y -i \"" + encParam.VideoPath + "\" -map 0:v -c:v libx264 -b:v " + encParam.VideoBitrate + "k -x264opts \"pass=1:" + encParam.VideoParam + "\" \"temp.mp4\"");
                         cmdList.Add("\"" + ffmpegPath + "\" -y -i \"" + encParam.VideoPath + "\" -map 0:v -c:v libx264 -b:v " + encParam.VideoBitrate + "k -x264opts \"pass=3:" + encParam.VideoParam + "\" \"temp.mp4\"");
+                    }
+                }
+                else if (encParam.VideoMode == EncParam.VideoModes.AUTO)
+                {
+                    if (encParam.VideoParam.Trim() == "")
+                    {
+                        cmdList.Add("\"" + ffmpegPath + "\" -y -i \"" + encParam.VideoPath + "\" -map 0:v -c:v libx264 -crf " + encParam.VideoCRF + " -x264opts \"pass=1\" \"temp.mp4\"");
+                    }
+                    else
+                    {
+                        cmdList.Add("\"" + ffmpegPath + "\" -y -i \"" + encParam.VideoPath + "\" -map 0:v -c:v libx264 -crf " + encParam.VideoCRF + " -x264opts \"pass=1:" + encParam.VideoParam + "\" \"temp.mp4\"");
                     }
                 }
                 videoIndex = loadIndex;
@@ -266,6 +301,11 @@ namespace QEnc
             {
                 foreach (string cmd in cmdArray)
                 {
+                    if (encNote.Video == EncNote.TrackStates.Process && encParam.VideoMode == EncParam.VideoModes.AUTO && currentStage > 0 && CheckVideoBitrate("temp.mp4") <= encParam.VideoBitrate)
+                    {
+                        ProcessSingleCommand(Regex.Replace(Regex.Replace(cmd, " -y -i \".+?\"", " -y -i \"temp.mp4\""), " -c:v libx264 -b:v [0-9]+k -x264opts \".+?\"", " -c:v copy"));
+                        break;
+                    }
                     ProcessSingleCommand(cmd);
                     currentStage++;
                 }
@@ -280,6 +320,11 @@ namespace QEnc
                 {
                     foreach (string cmd in cmdArray)
                     {
+                        if (encNote.Video == EncNote.TrackStates.Process && encParam.VideoMode == EncParam.VideoModes.AUTO && currentStage > 0 && CheckVideoBitrate("temp.mp4") <= encParam.VideoBitrate)
+                        {
+                            ProcessSingleCommand(Regex.Replace(Regex.Replace(cmd, " -y -i \".+?\"", " -y -i \"temp.mp4\""), " -c:v libx264 -b:v [0-9]+k -x264opts \".+?\"", " -c:v copy"));
+                            break;
+                        }
                         ProcessSingleCommand(cmd);
                         currentStage++;
                     }
