@@ -79,7 +79,10 @@ namespace QEnc
             int style = GetWindowLong(windowHandle, GWL_STYLE);
             SetWindowLong(windowHandle, GWL_STYLE, (style | WS_CAPTION));
 
-            LoadConfig();
+            if(Environment.GetCommandLineArgs().Length == 1)
+                LoadConfig(System.IO.Path.GetTempPath() + "QEnc\\config.dat");
+            else if(!LoadConfig(Environment.GetCommandLineArgs()[1]))
+                LoadConfig(System.IO.Path.GetTempPath() + "QEnc\\config.dat");
 
             ProgressBar.BarOpacity = 0;
             ProgressBar.Value = 0;
@@ -826,21 +829,20 @@ namespace QEnc
             stream.Close();
         }
 
-        private void LoadConfig()
+        private bool LoadConfig(string path)
         {
-            string fileDirectory = System.IO.Path.GetTempPath() + "QEnc\\";
-            string fileName = "config";
             try
             {
-                Stream stream = new FileStream(fileDirectory + fileName + ".dat", FileMode.Open, FileAccess.Read);
+                Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read);
                 BinaryFormatter binaryFormatter = new BinaryFormatter();
                 ConfigTag config = (ConfigTag)binaryFormatter.Deserialize(stream);
                 stream.Close();
                 ApplyConfigTag(config);
+                return true;
             }
             catch (Exception)
             {
-
+                return false;
             }
         }
     }
