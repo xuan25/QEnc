@@ -99,9 +99,9 @@ namespace QEnc
             process.StandardInput.WriteLine(cmd + " & exit");
             string result = process.StandardError.ReadToEnd();
             return Regex.Matches(result, 
-                "(Stream #(?<FileNum>[0-9]+):(?<TrackNum>[0-9]+)(\\((?<TrackName>.+)\\))?: (?<Type>Video): .*?(?<Width>[0-9]+)x(?<Height>[0-9]+), .*?(?<Bitrate>[0-9]+) kb/s, .*?(?<FPS>[0-9]+) fps)|" +
-                "(Stream #(?<FileNum>[0-9]+):(?<TrackNum>[0-9]+)(\\((?<TrackName>.+)\\))?: (?<Type>Audio): )|" +
-                "(Stream #(?<FileNum>[0-9]+):(?<TrackNum>[0-9]+)(\\((?<TrackName>.+)\\))?: (?<Type>Subtitle): )");
+                "(Stream #(?<FileNum>[0-9]+):(?<TrackNum>[0-9]+)(\\((?<TrackName>.+)\\))?: (?<Type>Video):.*?(?<Width>[0-9]+)x(?<Height>[0-9]+).*?(?<Bitrate>[0-9]+) kb/s.*?(?<FPS>[0-9]+) fps)|" +
+                "(Stream #(?<FileNum>[0-9]+):(?<TrackNum>[0-9]+)(\\((?<TrackName>.+)\\))?: (?<Type>Audio):)|" +
+                "(Stream #(?<FileNum>[0-9]+):(?<TrackNum>[0-9]+)(\\((?<TrackName>.+)\\))?: (?<Type>Subtitle):)");
         }
 
         public static bool IsVideoAvailable(string path)
