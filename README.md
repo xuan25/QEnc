@@ -36,15 +36,19 @@ Right click to remove the Loaded file
 
 Left click to switch the processing mode between use encoder and copy stream
 
-## About config
+## About Config
 
-The first line of both Video config and Audio config is the quality. The second line of the Video config is the additional parameters pass to the X264 encoder. (Use the format "[Name1]=[Value1]:[Name2]=[Value2]...") However, the second line of Audio config is reserved.
+The first line of Video config is how the video is encoded (*Auto* implies using crf as the 1st pass, and using vbr as the second pass if the bitrate is over the set bitrate after the 1st pass). The second line of Video config and the first line of Audio config is the quality. The third line of the Video config is the additional parameters pass to the X264 encoder. (Use the format "[Name1]=[Value1]:[Name2]=[Value2]...") However, the second line of Audio config is reserved currently.
 
-## About queue
+## About Queue
 
 Click *Multi* button to expand Queue panel (It also affect the process mode when you click the *Start* button). Click *Queue* button to add current config into the queue. Click *Not queue* button to remove.
 
 Attention: Once you add a config to the queue you can not change it any more.
+
+## About Preset
+
+Drag the preset file onto the executable and run QEnc to load the preset.
 
 
 
@@ -83,10 +87,14 @@ QEnc是一种基于拖放操作的视频压制和封装工具
 
 ## 关于配置
 
-视频配置和音频配置的第一行是质量。 视频配置的第二行是传递给X264编码器的附加参数。 （使用格式"[Name1]=[Value1]:[Name2]=[Value2]..."）然而，音频配置的第二行是预留的。
+视频配置的第一行是视频的编码方式（“自动”意味着使用crf作为第一遍处理，如果比特率在第一遍处理之后超过设定的比特率，则使用vbr作为第二遍处理）。视频配置的第二行和音频配置的第一行是质量。 视频配置的第三行是传递给X264编码器的附加参数。 （使用格式"[Name1]=[Value1]:[Name2]=[Value2]..."）然而，音频配置的第二行目前是预留的。
 
 ## 关于队列
 
 单击“多个”按钮以展开“队列”面板（单击“开始”按钮时，它也会影响过程模式）。 单击“队列”按钮将当前配置添加到队列中。 单击“未队列”按钮以删除。
 
 注意：将配置添加到队列后，您无法再进行更改。
+
+## 关于预设
+
+将预设文件拖到可执行文件上并运行QEnc以加载预设。
